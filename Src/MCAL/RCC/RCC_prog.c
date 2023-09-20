@@ -33,24 +33,24 @@ void RCC_vidInit(void){
 
 #elif SET_SYSTEM_CLOCK_SOURCE == RCC_PLL
 #if PLL_SOURCE != PLL_DISABLED
+    // set the source of the phase locked loop
+    RCC_Regs->CFGR &= ~(BIT_MASK << RCC_CFGR_PLLSRC);
+    RCC_Regs->CFGR &= ~(BIT_MASK << RCC_CFGR_PLLXTPRE);
+    RCC_Regs->CFGR |= (PLL_SOURCE << RCC_CFGR_PLLSRC);
+    // set the value of the phase locked loop
+    RCC_Regs->CFGR &= ~(0xf << RCC_CFGR_PLLMUL);
+    RCC_Regs->CFGR |= (PLL_MULTIPLICATION_VALUE << RCC_CFGR_PLLMUL);
     // set the system clock to pll clock
     RCC_Regs->CR |= (BIT_MASK << RCC_CR_PLLON);        
     // wait until the PLL is ready and stable
     uint32_t RCC_ClkRdyTimeout = 0;
     while(!GET_BIT(RCC_Regs->CR, 25) && RCC_ClkRdyTimeout < 10000)
         RCC_ClkRdyTimeout++;    
-    // set the value of the phase locked loop
-    RCC_Regs->CFGR &= ~(0xf << RCC_CFGR_PLLMUL);
-    RCC_Regs->CFGR |= (PLL_MULTIPLICATION_VALUE << RCC_CFGR_PLLMUL);
-    // set the source of the phase locked loop
-    RCC_Regs->CFGR &= ~(BIT_MASK << RCC_CFGR_PLLSRC);
-    RCC_Regs->CFGR &= ~(BIT_MASK << RCC_CFGR_PLLXTPRE);
-    RCC_Regs->CFGR |= (PLL_SOURCE << RCC_CFGR_PLLSRC);
 #endif
 #endif
 // set the mcu clock output source
     RCC_Regs->CFGR &= ~(7 << 24);
-    RCC_Regs->CFGR |= (SET_MCU_CLK_OUTPUT_SRC);
+    RCC_Regs->CFGR |= (SET_MCU_CLK_OUTPUT_SRC << 24);
 /* set system prescalers */
 // AHB bus prescaler
     // clear the bits of the HPRE
@@ -68,7 +68,7 @@ void RCC_vidInit(void){
     // set the value of the prescaler
     RCC_Regs->CFGR |= (SET_APB2_CLOCK_PRESCALER << 11);
 // USB Prescaler
-        // clear the bits of the USBPRE
+    // clear the bits of the USBPRE
     RCC_Regs->CFGR &= ~(0x1 << 22);
     // set the value of the prescaler
     RCC_Regs->CFGR |= (SET_USB_PRESCALER << 22);
