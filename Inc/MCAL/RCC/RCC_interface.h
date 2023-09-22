@@ -212,32 +212,41 @@
  * Name: RCC_vidInit
  * Params: void
  * Returns: void
- * Use Cases: initialize the RCC peripheral
+ * Functionality: Initialize the System Clocks
+ * Precondition: set the difinition values in the
+ *               RCC_config.h file.
+ * Postcondition: None
  ***************************************************/
 void RCC_vidInit(void);
 
 /***************************************************
- * Name:
- * Params:
- * Returns:
- * Use Cases:
- ***************************************************/
+* @name   - 
+* @param  -
+* @return -
+* @brief  -
+* @pre    -
+* @post   -
+***************************************************/
 ErrorStates_t RCC_enuEnablePeripheralClock(uint8_t Copy_u8BusID, uint8_t Copy_u8PeripheralID);
 
 /***************************************************
- * Name:
- * Params:
- * Returns:
- * Use Cases:
- ***************************************************/
+* @name   - 
+* @param  -
+* @return -
+* @brief  -
+* @pre    -
+* @post   -
+***************************************************/
 ErrorStates_t RCC_enuDisablePeripheralClock(uint8_t Copy_u8BusID, uint8_t Copy_u8PeripheralID);
 
 /***************************************************
- * Name:
- * Params:
- * Returns:
- * Use Cases:
- ***************************************************/
+* @name   - 
+* @param  -
+* @return -
+* @brief  -
+* @pre    -
+* @post   -
+***************************************************/
 ErrorStates_t RCC_enuResetPeripheral(uint8_t Copy_u8BusID, uint8_t Copy_u8PeripheralID);
 
 #endif /* MCAL_RCC_RCC_INTERFACE_H_ */

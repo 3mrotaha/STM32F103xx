@@ -3,8 +3,8 @@
 #include "../../../Inc/LIB/Error_States.h"
 #include "../../../Inc/LIB/Math.h"
 
-#include "../../../Inc/MCAL/RCC/RCC_config.h"
 #include "../../../Inc/MCAL/RCC/RCC_private.h"
+#include "../../../Inc/MCAL/RCC/RCC_config.h"
 
 
 void RCC_vidInit(void){

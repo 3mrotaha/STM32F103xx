@@ -131,13 +131,13 @@ typedef struct
 
 #define _ALL_PERIPHERALS_ 200
 
-#define IO_A_ID 2
-#define IO_B_ID 3
-#define IO_C_ID 4
-#define IO_D_ID 5
-#define IO_E_ID 6
-#define IO_F_ID 7
-#define IO_G_ID 8
+#define _IO_A_ID_ 2
+#define _IO_B_ID_ 3
+#define _IO_C_ID_ 4
+#define _IO_D_ID_ 5
+#define _IO_E_ID_ 6
+#define _IO_F_ID_ 7
+#define _IO_G_ID_ 8
 
 #define _AFIO_ID_ 0
 

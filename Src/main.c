@@ -19,6 +19,9 @@
 
 #include "../Inc/MCAL/RCC/RCC_interface.h"
 
+#include "../Inc/MCAL/GPIO/GPIO_config.h"
+#include "../Inc/MCAL/GPIO/GPIO_interface.h"
+
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
@@ -27,6 +30,29 @@
 int main(void)
 {
 	RCC_vidInit();
+	GPIO_vidInit();
+	GPIO_enuSetPinConfiguration(GPIO_PORTA,GPIO_PIN_0, &(GPIO_PinConfig_t){
+		.mode = GPIO_OUTPUT_2MHZ,
+		.config = GPIO_OUTPUT_OPENDRAIN,
+		.value = GPIO_OUTPUT_LOW
+	});
+	for(uint8_t i = 0; i < 16; i++){
+		GPIO_enuSetPinConfiguration(GPIO_PORTA, i, &(GPIO_PinConfig_t){
+			.mode = GPIO_OUTPUT_2MHZ,
+			.config = GPIO_OUTPUT_PUSHPULL,
+			.value = GPIO_OUTPUT_LOW
+		});
+	}
     /* Loop forever */
-	for(;;);
+	for(;;){
+		for(uint8_t i = 0; i < 16; i++){
+			GPIO_enuSetPinValue(GPIO_PORTA, i, GPIO_OUTPUT_HIGH);
+			for(uint32_t j = 0; j < 10000; j++);
+		}
+
+		for(uint8_t i = 0; i < 16; i++){
+			GPIO_enuSetPinValue(GPIO_PORTA, i, GPIO_OUTPUT_LOW);
+			for(uint32_t j = 0; j < 10000; j++);
+		}
+	}
 }

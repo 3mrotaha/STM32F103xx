@@ -8,6 +8,7 @@
 #ifndef MCAL_RCC_RCC_CONFIG_H_
 #define MCAL_RCC_RCC_CONFIG_H_
 #include "RCC_interface.h"
+
 /*
  * @ref SYSTEM_CLOCK_SOURCES
  */
