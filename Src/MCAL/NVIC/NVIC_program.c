@@ -1,3 +1,14 @@
+/**
+ * @file NVIC_program.c
+ * @author Amr M. Taha (amr.taha1261@gmail.com)
+ * @brief this file contains the essential functions of NVIC
+ *        Cortex-M3 internal peripheral.
+ * @version 1
+ * @date 2023-09-25
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include "../../../Inc/LIB/std_types.h"
 #include "../../../Inc/LIB/Error_States.h"
 #include "../../../Inc/LIB/stm32f103xx.h"
