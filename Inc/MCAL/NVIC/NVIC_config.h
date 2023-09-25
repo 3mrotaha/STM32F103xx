@@ -1,3 +1,13 @@
+/**
+ * @file NVIC_config.h
+ * @author Amr M. Taha (amr.taha1261@gmail.com)
+ * @brief 
+ * @version 1
+ * @date 2023-09-25
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #ifndef _NVIC_CONFIG_H
 #define _NVIC_CONFIG_H
 

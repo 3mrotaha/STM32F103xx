@@ -192,6 +192,7 @@ ErrorStates_t NVIC_enuSetInterruptPending(uint8_t Copy_u8IntNum);
  *******************************************************************************/
 ErrorStates_t NVIC_enuClearInterruptPending(uint8_t Copy_u8IntNum);
 
+
 /*****************************************************************************
  * @name NVIC_enuGetActiveFlag
  * @param Copy_u8IntNum (uint8_t)

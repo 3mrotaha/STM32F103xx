@@ -1,3 +1,14 @@
+/**
+ * @file RCC_prog.c
+ * @author Amr M. Taha (amr.taha1261@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2023-09-25
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
+
 #include "../../../Inc/LIB/std_types.h"
 #include "../../../Inc/LIB/STM32F103xx.h"
 #include "../../../Inc/LIB/Error_States.h"
