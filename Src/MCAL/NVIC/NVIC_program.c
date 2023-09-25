@@ -140,15 +140,18 @@ ErrorStates_t NVIC_enuGetInterruptPriority(uint8_t Copy_u8IntNum, uint8_t Copy_u
     if(Copy_pu8PreempPrio != NULL && Copy_pu8SubPrio != NULL){
         if((Copy_u8IntNum >= _INT_NUM_0_ && Copy_u8IntNum <= _INT_NUM_67_)
            && (Copy_u8GroupID >= _NVIC_PR_G1_ && Copy_u8GroupID <= _NVIC_PR_G5_)){
+            // read the ipr register corresponding to the interrupt number
             *Copy_pu8SubPrio = (NVIC_Regs->IPRx[Copy_u8IntNum] >> (8 - _NVIC_PRIO_BITS_));            
+            // get the preemption priority regarding the group id
             *Copy_pu8PreempPrio = (*Copy_pu8SubPrio >> (_NVIC_PRIO_BITS_ - Copy_u8GroupID));
+            // get the sub priority regarding the group id
             *Copy_pu8SubPrio = (*Copy_pu8SubPrio & ((uint8_t)0x0f >> Copy_u8GroupID));
-            return ES_OK;
+            return ES_OK; // everything is ok
         }else{
-            return ES_OUT_OF_RANGE;
+            return ES_OUT_OF_RANGE; // interrupt num or group id is out of range
         }
     }else{
-        return ES_NULL_POINTER;
+        return ES_NULL_POINTER; // null pointer passed
     }
 }
 
