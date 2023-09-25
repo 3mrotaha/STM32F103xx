@@ -22,6 +22,9 @@
 #include "../Inc/MCAL/GPIO/GPIO_config.h"
 #include "../Inc/MCAL/GPIO/GPIO_interface.h"
 
+#include "../Inc/MCAL/NVIC/NVIC_config.h"
+#include "../Inc/MCAL/NVIC/NVIC_interface.h"
+
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
@@ -43,6 +46,12 @@ int main(void)
 			.value = GPIO_OUTPUT_LOW
 		});
 	}
+
+	GPIO_enuLockPin(GPIO_PORTA, GPIO_PIN_5);
+	GPIO_enuLockPin(GPIO_PORTA, GPIO_PIN_9);
+	GPIO_enuLockPin(GPIO_PORTA, GPIO_PIN_12);
+
+	NVIC_vidInit();
     /* Loop forever */
 	for(;;){
 		for(uint8_t i = 0; i < 16; i++){

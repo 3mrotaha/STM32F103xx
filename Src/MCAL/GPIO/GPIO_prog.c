@@ -410,7 +410,7 @@ ErrorStates_t GPIO_enuTogglePinValue(uint8_t Copy_u8PortId, uint8_t Copy_u8PinId
 }
 
 ErrorStates_t GPIO_enuSetPortValue(uint8_t Copy_u8PortId, uint16_t Copy_u16PortValue){
-    if((Copy_u8PortId >= _GPIO_PORTA_ && Copy_u8PortId <= _GPIO_PORTE_)){
+    if(Copy_u8PortId >= _GPIO_PORTA_ && Copy_u8PortId <= _GPIO_PORTE_){
         if(Copy_u16PortValue <= 0xffffffff){
             switch(Copy_u8PortId){
                 case _GPIO_PORTA_:
@@ -431,6 +431,7 @@ ErrorStates_t GPIO_enuSetPortValue(uint8_t Copy_u8PortId, uint16_t Copy_u16PortV
                 default:
                     return ES_NOK;
             }
+            return ES_OK;
         }else{
             return ES_NOK;
         }
@@ -494,13 +495,11 @@ ErrorStates_t GPIO_enuLockPin(uint8_t Copy_u8PortId, uint8_t Copy_u8PinId){
                 return ES_NOK;
         }
         // perform the locking using the locking sequence
-        uint32_t tempVal = (BIT_MASK << 16) | (BIT_MASK << Copy_u8PinId);
-        tempRegs->LCKR = tempVal; /* write 1 */
-        CLEAR_BIT(tempVal, 16); /* write 0 */
-        tempRegs->LCKR = tempVal;
-        SET_BIT(tempVal, 16); /* write 1 */
-        tempRegs->LCKR = tempVal;
-        tempVal = tempRegs->LCKR; /* read 0 */;
+        tempRegs->LCKR |= (1 << Copy_u8PinId);
+        tempRegs->LCKR |= (1 << 16); // set the lock bit
+        tempRegs->LCKR &= ~(1 << 16); // clear the lock bit
+        tempRegs->LCKR |= (1 << 16); // set the lock bit
+        uint16_t tempVal = tempRegs->LCKR; // read the lock register        
         
         if(!(tempRegs->LCKR >> 16)) // if it reads 0
             return ES_NOK; // locking error happened

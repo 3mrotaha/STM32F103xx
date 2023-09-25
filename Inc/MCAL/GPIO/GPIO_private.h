@@ -88,9 +88,6 @@ typedef struct
 #define GPIOD_Regs ((volatile ST_GPIO_Regs *)GPIOD_BASE)
 #define GPIOE_Regs ((volatile ST_GPIO_Regs *)GPIOE_BASE)
 
-#define _CONCAT_H_(b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15) 0b##b15##b14##b13##b12##b11##b10##b9##b8##b7##b6##b5##b4##b3##b2##b1##b0
-#define _CONCAT_(b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15) _CONCAT_H_(b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15)
-
 #define _CR_BITS_H_(b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15) ((b0 | (b1 << 2)) | ((b2 | (b3 << 2)) << 4) | ((b4 | (b5 << 2)) << 8) | ((b6 | (b7 << 2)) << 12) | ((b8 | (b9 << 2)) << 16) | ((b10 | (b11 << 2)) << 20) | ((b12 | (b13 << 2)) << 24) | ((b14 | (b15 << 2)) << 28))
 #define _CR_BITS_(b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15) _CR_BITS_H_(b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15)
 
