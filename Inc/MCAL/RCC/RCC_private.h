@@ -1,10 +1,14 @@
-/*
- * RCC_private.h
- *
- *  Created on: Sep 17, 2023
- *      Author: amrmo
+/**
+ * @file RCC_private.h
+ * @author Amr M. Taha (amr.taha1261@gmail.com)
+ * @brief this file contains the RCC private API's
+ *        for implementer.
+ * @version 1
+ * @date 2023-09-26
+ * 
+ * @copyright Copyright (c) 2023
+ * 
  */
-
 #ifndef MCAL_RCC_RCC_PRIVATE_H_
 #define MCAL_RCC_RCC_PRIVATE_H_
 #include "../../LIB/std_types.h"

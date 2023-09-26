@@ -1,10 +1,14 @@
-/*
- * RCC_interface.h
- *
- *  Created on: Sep 17, 2023
- *      Author: amrmo
+/**
+ * @file RCC_interface.h
+ * @author Amr M. Taha (amr.taha1261@gmail.com)
+ * @brief this file contains the RCC APIs used
+ *        by the user during the application.
+ * @version 1
+ * @date 2023-09-26
+ * 
+ * @copyright Copyright (c) 2023
+ * 
  */
-
 #ifndef MCAL_RCC_RCC_INTERFACE_H_
 #define MCAL_RCC_RCC_INTERFACE_H_
 #include "../../LIB/std_types.h"

@@ -1,3 +1,14 @@
+/**
+ * @file NVIC_interface.h
+ * @author Amr M. Taha (amr.taha1261@gmail.com)
+ * @brief this file contains the NVIC APIs that're
+ *        used by the user during the application.
+ * @version 1
+ * @date 2023-09-26
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #ifndef NVIC_INTERFACE_H
 #define NVIC_INTERFACE_H
 #include "../../LIB/std_types.h"

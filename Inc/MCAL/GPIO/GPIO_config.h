@@ -1,3 +1,15 @@
+/**
+ * @file GPIO_config.h
+ * @author Amr M. Taha (amr.taha1261@gmail.com)
+ * @brief this file contians the essential configurations
+ *        that is used to initialize the GPIO peripheral's
+ *        Register.
+ * @version 1
+ * @date 2023-09-26
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #ifndef _GPIO_CONFIG_
 #define _GPIO_CONFIG_
 #include "../../LIB/std_types.h"

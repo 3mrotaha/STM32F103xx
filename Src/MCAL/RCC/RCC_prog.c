@@ -1,7 +1,8 @@
 /**
  * @file RCC_prog.c
  * @author Amr M. Taha (amr.taha1261@gmail.com)
- * @brief 
+ * @brief this file contains the implementation of
+ *        the RCC APIs.
  * @version 0.1
  * @date 2023-09-25
  * 

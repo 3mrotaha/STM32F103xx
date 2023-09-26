@@ -1,3 +1,14 @@
+/**
+ * @file GPIO_interface.h
+ * @author Amr M. Taha (amr.taha1261@gmail.com)
+ * @brief  this file contains the API's used 
+ *         by the user to control the GPIO peripheral.
+ * @version 1
+ * @date 2023-09-26
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #ifndef _GPIO_INTERFACE_H_
 #define _GPIO_INTERFACE_H_
 #include "../../LIB/Error_States.h"

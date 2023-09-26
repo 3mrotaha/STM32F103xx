@@ -1,3 +1,14 @@
+/**
+ * @file NVIC_private.h
+ * @author Amr M. Taha (amr.taha1261@gmail.com)
+ * @brief this file contains the private API's
+ *        for implementer.
+ * @version 1
+ * @date 2023-09-26
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #ifndef _NVIC_PRIVATE_H
 #define _NVIC_PRIVATE_H
 #include "../../LIB/STM32F103xx.h"

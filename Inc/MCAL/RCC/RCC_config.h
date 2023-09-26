@@ -1,8 +1,13 @@
-/*
- * RCC_config.h
- *
- *  Created on: Sep 17, 2023
- *      Author: amrmo
+/**
+ * @file RCC_config.h
+ * @author Amr M. Taha (amr.taha1261@gmail.com)
+ * @brief this file contains the essential configurations
+ *        that're used to initialize the MCU clocking system.
+ * @version 1
+ * @date 2023-09-26
+ * 
+ * @copyright Copyright (c) 2023
+ * 
  */
 
 #ifndef MCAL_RCC_RCC_CONFIG_H_

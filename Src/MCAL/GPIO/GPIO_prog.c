@@ -1,3 +1,14 @@
+/**
+ * @file GPIO_prog.c
+ * @author Amr M. Taha (amr.taha1261@gmail.com)
+ * @brief this file contains the implementation of
+ *        the GPIO APIs.
+ * @version 1
+ * @date 2023-09-26
+ * 
+ * @copyright Copyright (c) 2023
+ * 
+ */
 #include "../../../Inc/LIB/std_types.h"
 #include "../../../Inc/LIB/STM32F103xx.h"
 #include "../../../Inc/LIB/Error_States.h"
