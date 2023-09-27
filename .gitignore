@@ -2,7 +2,7 @@
 .cproject
 Debug
 .settings
-AFIO
-EXTI
 .vscode
 HAL
+fill.c
+out.exe

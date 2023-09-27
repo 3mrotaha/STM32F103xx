@@ -25,43 +25,53 @@
 #include "../Inc/MCAL/NVIC/NVIC_config.h"
 #include "../Inc/MCAL/NVIC/NVIC_interface.h"
 
+#include "../Inc/MCAL/EXTI/EXTI_config.h"
+#include "../Inc/MCAL/EXTI/EXTI_interface.h"
+
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
+void delay1s(void){
+    for(uint32_t j = 0; j < 1000; j++)
+      for(uint32_t k = 0; k < 1000; k++);
+}
 
+
+void toggleC0_1s(void* none){
+  // toggle pin 0 in port B every 20ms for 5 times
+  for(uint8_t i = 0; i < 5; i++){
+    GPIO_enuTogglePinValue(GPIO_PORTB, GPIO_PIN_0);
+    delay1s();
+  }
+}
+
+void toggleC1_1s(void* none){
+  // toggle pin 1 in port B every 20ms for 5 times
+  for(uint8_t i = 0; i < 5; i++){
+    GPIO_enuTogglePinValue(GPIO_PORTB, GPIO_PIN_1);
+    delay1s();
+  }
+}
 
 int main(void)
 {
-	RCC_vidInit();
-	GPIO_vidInit();
-	GPIO_enuSetPinConfiguration(GPIO_PORTA,GPIO_PIN_0, &(GPIO_PinConfig_t){
-		.mode = GPIO_OUTPUT_2MHZ,
-		.config = GPIO_OUTPUT_OPENDRAIN,
-		.value = GPIO_OUTPUT_LOW
-	});
-	for(uint8_t i = 0; i < 16; i++){
-		GPIO_enuSetPinConfiguration(GPIO_PORTA, i, &(GPIO_PinConfig_t){
-			.mode = GPIO_OUTPUT_2MHZ,
-			.config = GPIO_OUTPUT_PUSHPULL,
-			.value = GPIO_OUTPUT_LOW
-		});
-	}
-
-	GPIO_enuLockPin(GPIO_PORTA, GPIO_PIN_5);
-	GPIO_enuLockPin(GPIO_PORTA, GPIO_PIN_9);
-	GPIO_enuLockPin(GPIO_PORTA, GPIO_PIN_12);
-
-	NVIC_vidInit();
+  uint32_t temp = 20; // for the handler parameter
+  // enable AFIO clock
+  RCC_enuEnablePeripheralClock(APB_2_ID, AFIO_ID);
+  // initialize gpio peripheral
+  GPIO_vidInit();
+  // initialize the external interrupt peripheral
+  if(EXTI_enuInit() == ES_OK){
+    // initialize the interrupt handlers for the enabled interrupts
+    EXTI_enuSetInterruptHandler(EXTI_LINE0, &toggleC0_1s, &temp); // line 0 handler
+    EXTI_enuSetInterruptHandler(EXTI_LINE1, &toggleC1_1s, &temp); // line 1 handler
+  }
+  // set the priority for the interrupts.
+  // IRQ6 > IRQ7 in preemtive, and IRQ6 < IRQ7 in sub priority
+  NVIC_enuSetInterruptPriority(INT_NUM_6, NVIC_PRIORITY_GROUP3, NVIC_PREEMPTIVE_PRIORITY_L1, NVIC_SUB_PRIORITY_L2);
+  NVIC_enuSetInterruptPriority(INT_NUM_7, NVIC_PRIORITY_GROUP3, NVIC_PREEMPTIVE_PRIORITY_L2, NVIC_SUB_PRIORITY_L1);
     /* Loop forever */
 	for(;;){
-		for(uint8_t i = 0; i < 16; i++){
-			GPIO_enuSetPinValue(GPIO_PORTA, i, GPIO_OUTPUT_HIGH);
-			for(uint32_t j = 0; j < 10000; j++);
-		}
 
-		for(uint8_t i = 0; i < 16; i++){
-			GPIO_enuSetPinValue(GPIO_PORTA, i, GPIO_OUTPUT_LOW);
-			for(uint32_t j = 0; j < 10000; j++);
-		}
 	}
 }

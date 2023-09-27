@@ -20,8 +20,8 @@
  * @ref PORT_ENABLE
 */
 #define GPIOA_ENABLE    ENABLE_PORT
-#define GPIOB_ENABLE    DISABLE_PORT
-#define GPIOC_ENABLE    ENABLE_PORT
+#define GPIOB_ENABLE    ENABLE_PORT
+#define GPIOC_ENABLE    DISABLE_PORT
 #define GPIOD_ENABLE    DISABLE_PORT
 #define GPIOE_ENABLE    DISABLE_PORT
 /***************************** PORT A *****************************************/

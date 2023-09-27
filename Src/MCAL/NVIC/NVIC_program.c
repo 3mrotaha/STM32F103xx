@@ -29,7 +29,6 @@ void NVIC_vidInit(void){
     NVIC_Regs->ISER0 = _CONCAT_(SET_INT_16, SET_INT_17, SET_INT_18, SET_INT_19, SET_INT_20, SET_INT_21, SET_INT_22, SET_INT_23,
         SET_INT_24, SET_INT_25, SET_INT_26, SET_INT_27, SET_INT_28, SET_INT_29, SET_INT_30, SET_INT_31
     ) << 16;
-
     /** set the enabled interrupts in ISER1 **/
     // first 16 interrupts
     NVIC_Regs->ISER1 = _CONCAT_(
@@ -82,7 +81,7 @@ ErrorStates_t NVIC_enuDisableInterrupt(uint8_t Copy_u8IntNum){
 }
 
 ErrorStates_t NVIC_enuSetInterruptPending(uint8_t Copy_u8IntNum){
-    if(Copy_u8IntNum >= _INT_NUM_0_ && Copy_u8IntNum <= _INT_NUM_67_){
+    if(Copy_u8IntNum >= _INT_NUM_0_ && Copy_u8IntNum <= _INT_NUM_67_){        
         // check the number if in ISPR0, ISPR1 or ISPR2 range
         if(Copy_u8IntNum <= _INT_NUM_31_ && Copy_u8IntNum >= _INT_NUM_0_){
             SET_BIT(NVIC_Regs->ISPR0, (Copy_u8IntNum)); /*set the interrupt pending*/

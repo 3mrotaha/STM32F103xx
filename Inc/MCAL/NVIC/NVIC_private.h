@@ -22,23 +22,23 @@ typedef struct ST_NVIC_Regs{
     uint32_t ISER0; 
     uint32_t ISER1;
     uint32_t ISER2;
-    
+    uint32_t __RESERVED0__[29];
     uint32_t ICER0;
     uint32_t ICER1;
     uint32_t ICER2;
-    
+    uint32_t __RESERVED1__[29];
     uint32_t ISPR0;
     uint32_t ISPR1;
     uint32_t ISPR2;
-    
+    uint32_t __RESERVED2__[29];
     uint32_t ICPR0;
     uint32_t ICPR1;
     uint32_t ICPR2;
-    
+    uint32_t __RESERVED3__[29];
     uint32_t IABR0;
     uint32_t IABR1;
     uint32_t IABR2;
-
+    uint32_t __RESERVED4__[61];
     uint8_t IPRx[_PERIORITY_REGISTERS_NUM_];
 }ST_NVIC_Regs_t;
 
