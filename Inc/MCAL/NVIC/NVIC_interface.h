@@ -112,19 +112,43 @@
  * @ref NVIC_PREEMPTIVE_PRIORITY
  * @brief use this IDs to refer to a specific preemptive priority
  */
+#define NVIC_PREEMPTIVE_PRIORITY_L0     _NVIC_P_PREE_L0_
 #define NVIC_PREEMPTIVE_PRIORITY_L1     _NVIC_P_PREE_L1_
 #define NVIC_PREEMPTIVE_PRIORITY_L2     _NVIC_P_PREE_L2_
 #define NVIC_PREEMPTIVE_PRIORITY_L3     _NVIC_P_PREE_L3_
 #define NVIC_PREEMPTIVE_PRIORITY_L4     _NVIC_P_PREE_L4_
+#define NVIC_PREEMPTIVE_PRIORITY_L5     _NVIC_P_PREE_L5_
+#define NVIC_PREEMPTIVE_PRIORITY_L6     _NVIC_P_PREE_L6_
+#define NVIC_PREEMPTIVE_PRIORITY_L7     _NVIC_P_PREE_L7_
+#define NVIC_PREEMPTIVE_PRIORITY_L8     _NVIC_P_PREE_L8_
+#define NVIC_PREEMPTIVE_PRIORITY_L9     _NVIC_P_PREE_L9_
+#define NVIC_PREEMPTIVE_PRIORITY_L10     _NVIC_P_PREE_L10_
+#define NVIC_PREEMPTIVE_PRIORITY_L11     _NVIC_P_PREE_L11_
+#define NVIC_PREEMPTIVE_PRIORITY_L12     _NVIC_P_PREE_L12_
+#define NVIC_PREEMPTIVE_PRIORITY_L13     _NVIC_P_PREE_L13_
+#define NVIC_PREEMPTIVE_PRIORITY_L14     _NVIC_P_PREE_L14_
+#define NVIC_PREEMPTIVE_PRIORITY_L15     _NVIC_P_PREE_L15_
 
 /**
  * @ref NVIC_SUB_PRIORITY
  * @brief use this IDs to refer to a specific sub priority
  */
+#define NVIC_SUB_PRIORITY_L0            _NVIC_P_SUB_L0_
 #define NVIC_SUB_PRIORITY_L1            _NVIC_P_SUB_L1_
 #define NVIC_SUB_PRIORITY_L2            _NVIC_P_SUB_L2_
 #define NVIC_SUB_PRIORITY_L3            _NVIC_P_SUB_L3_
-#define NVIC_SUB_PRIORITY_L4            _NVIC_P_SUB_L4_    
+#define NVIC_SUB_PRIORITY_L4            _NVIC_P_SUB_L4_
+#define NVIC_SUB_PRIORITY_L5            _NVIC_P_SUB_L5_
+#define NVIC_SUB_PRIORITY_L6            _NVIC_P_SUB_L6_
+#define NVIC_SUB_PRIORITY_L7            _NVIC_P_SUB_L7_
+#define NVIC_SUB_PRIORITY_L8            _NVIC_P_SUB_L8_
+#define NVIC_SUB_PRIORITY_L9            _NVIC_P_SUB_L9_
+#define NVIC_SUB_PRIORITY_L10            _NVIC_P_SUB_L10_
+#define NVIC_SUB_PRIORITY_L11            _NVIC_P_SUB_L11_
+#define NVIC_SUB_PRIORITY_L12            _NVIC_P_SUB_L12_
+#define NVIC_SUB_PRIORITY_L13            _NVIC_P_SUB_L13_
+#define NVIC_SUB_PRIORITY_L14            _NVIC_P_SUB_L14_
+#define NVIC_SUB_PRIORITY_L15            _NVIC_P_SUB_L15_
 
 /***************************************************************
  * @name NVIC_vidInit
@@ -256,7 +280,7 @@ ErrorStates_t NVIC_enuSetInterruptPriority(uint8_t Copy_u8IntNum, uint8_t Copy_u
  * @param Copy_u8IntNum (uint8_t)
  *        - interrupt number that should be get priority,
  *          possible values are @ref NVIC_INTERRUPTS
- * @param Copy_u8GroupID (uint8_t)
+ * @param Copy_u8GroupID (uint8_t*)
  *        - the priority group that the interrupt should be get to,
  *          possible values are @ref NVIC_PRIORITY_GROUP
  * @param Copy_pu8PreempPrio (uint8_t*)
@@ -279,6 +303,6 @@ ErrorStates_t NVIC_enuSetInterruptPriority(uint8_t Copy_u8IntNum, uint8_t Copy_u
  * @pre Interrupt priority is set.
  * @post none
  *******************************************************************************/
-ErrorStates_t NVIC_enuGetInterruptPriority(uint8_t Copy_u8IntNum, uint8_t Copy_u8GroupID, uint8_t *Copy_pu8PreempPrio, uint8_t *Copy_pu8SubPrio);
+ErrorStates_t NVIC_enuGetInterruptPriority(uint8_t Copy_u8IntNum, uint8_t *Copy_u8GroupID, uint8_t *Copy_pu8PreempPrio, uint8_t *Copy_pu8SubPrio);
 
 #endif /* NVIC_INTERFACE_H */

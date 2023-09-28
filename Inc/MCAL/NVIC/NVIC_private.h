@@ -15,6 +15,7 @@
 #include "../../LIB/std_types.h"
 
 #define NVIC_BASE (CORTEX_M3_INT_PERIPHERALS_BASE + 0xE100)
+#define SCB_AIRCR *((volatile uint32_t*)(CORTEX_M3_INT_PERIPHERALS_BASE + 0xED00 + 0x0C))
 #define _PERIORITY_REGISTERS_NUM_ 68
 #define _NVIC_PRIO_BITS_           4
 // NVIC registers
@@ -115,21 +116,45 @@ typedef struct ST_NVIC_Regs{
 #define _INT_NUM_66_ 66
 #define _INT_NUM_67_ 67
 
-#define _NVIC_PR_G1_    0
-#define _NVIC_PR_G2_    1
-#define _NVIC_PR_G3_    2
-#define _NVIC_PR_G4_    3
-#define _NVIC_PR_G5_    4
+#define _NVIC_PR_G0_    0
+#define _NVIC_PR_G1_    1
+#define _NVIC_PR_G2_    2
+#define _NVIC_PR_G3_    3
+#define _NVIC_PR_G4_    4
 
-#define _NVIC_P_PREE_L1_    0
-#define _NVIC_P_PREE_L2_    1
-#define _NVIC_P_PREE_L3_    2
-#define _NVIC_P_PREE_L4_    3
+#define _NVIC_P_PREE_L0_ 0
+#define _NVIC_P_PREE_L1_ 1
+#define _NVIC_P_PREE_L2_ 2
+#define _NVIC_P_PREE_L3_ 3
+#define _NVIC_P_PREE_L4_ 4
+#define _NVIC_P_PREE_L5_ 5
+#define _NVIC_P_PREE_L6_ 6
+#define _NVIC_P_PREE_L7_ 7
+#define _NVIC_P_PREE_L8_ 8
+#define _NVIC_P_PREE_L9_ 9
+#define _NVIC_P_PREE_L10_ 10
+#define _NVIC_P_PREE_L11_ 11
+#define _NVIC_P_PREE_L12_ 12
+#define _NVIC_P_PREE_L13_ 13
+#define _NVIC_P_PREE_L14_ 14
+#define _NVIC_P_PREE_L15_ 15
 
-#define _NVIC_P_SUB_L1_     0
-#define _NVIC_P_SUB_L2_     1
-#define _NVIC_P_SUB_L3_     2
-#define _NVIC_P_SUB_L4_     3    
+#define _NVIC_P_SUB_L0_ 0
+#define _NVIC_P_SUB_L1_ 1
+#define _NVIC_P_SUB_L2_ 2
+#define _NVIC_P_SUB_L3_ 3
+#define _NVIC_P_SUB_L4_ 4
+#define _NVIC_P_SUB_L5_ 5
+#define _NVIC_P_SUB_L6_ 6
+#define _NVIC_P_SUB_L7_ 7
+#define _NVIC_P_SUB_L8_ 8
+#define _NVIC_P_SUB_L9_ 9
+#define _NVIC_P_SUB_L10_ 10
+#define _NVIC_P_SUB_L11_ 11
+#define _NVIC_P_SUB_L12_ 12
+#define _NVIC_P_SUB_L13_ 13
+#define _NVIC_P_SUB_L14_ 14
+#define _NVIC_P_SUB_L15_ 15
 
 #define _INT_ENABLE_    1
 #define _INT_DISABLE_   0

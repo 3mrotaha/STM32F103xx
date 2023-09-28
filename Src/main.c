@@ -67,9 +67,13 @@ int main(void)
     EXTI_enuSetInterruptHandler(EXTI_LINE1, &toggleC1_1s, &temp); // line 1 handler
   }
   // set the priority for the interrupts.
-  // IRQ6 > IRQ7 in preemtive, and IRQ6 < IRQ7 in sub priority
-  NVIC_enuSetInterruptPriority(INT_NUM_6, NVIC_PRIORITY_GROUP3, NVIC_PREEMPTIVE_PRIORITY_L1, NVIC_SUB_PRIORITY_L2);
-  NVIC_enuSetInterruptPriority(INT_NUM_7, NVIC_PRIORITY_GROUP3, NVIC_PREEMPTIVE_PRIORITY_L2, NVIC_SUB_PRIORITY_L1);
+  // By default IRQ6 has a higher priority than IRQ7
+  	// let's increase the priority of IRQ7 and decrease the priority of IRQ6
+  	// and then make IRQ7 preempt the IRQ6
+  	/* IRQ6: Group = 3, preemption = L2, subpriority = L1 */
+  NVIC_enuSetInterruptPriority(INT_NUM_6, NVIC_PRIORITY_GROUP3, NVIC_PREEMPTIVE_PRIORITY_L2, NVIC_SUB_PRIORITY_L1);
+  	/* IRQ7: Group = 3, preemption = L1, subpriority = L2 */
+  NVIC_enuSetInterruptPriority(INT_NUM_7, NVIC_PRIORITY_GROUP3, NVIC_PREEMPTIVE_PRIORITY_L1, NVIC_SUB_PRIORITY_L2);
     /* Loop forever */
 	for(;;){
 

@@ -139,6 +139,9 @@ ErrorStates_t NVIC_enuSetInterruptPriority(uint8_t Copy_u8IntNum, uint8_t Copy_u
         && (Copy_u8GroupID >= _NVIC_PR_G1_ && Copy_u8GroupID <= _NVIC_PR_G5_)
         && (Copy_u8PreempPrio >= _NVIC_P_PREE_L1_ && Copy_u8PreempPrio <= _NVIC_P_PREE_L4_)
         && (Copy_u8SubPrio >= _NVIC_P_SUB_L1_ && Copy_u8SubPrio <= _NVIC_P_SUB_L4_)){
+        // set the priority group in the AIRCR in system control register
+        /*write this value on vectkey to enable write*/
+        SCB_AIRCR = (((uint32_t)0x05FA << 16) | ((uint32_t)(Copy_u8GroupID + _NVIC_PRIO_BITS_ - 1) << 8));
         // as the ipr supports byte access, there is no need to clear it first
         NVIC_Regs->IPRx[Copy_u8IntNum] = (Copy_u8PreempPrio << (8 - _NVIC_PRIO_BITS_ + Copy_u8GroupID)) | (Copy_u8SubPrio << (8 - _NVIC_PRIO_BITS_));
         return ES_OK;
@@ -147,16 +150,17 @@ ErrorStates_t NVIC_enuSetInterruptPriority(uint8_t Copy_u8IntNum, uint8_t Copy_u
     }
 }
 
-ErrorStates_t NVIC_enuGetInterruptPriority(uint8_t Copy_u8IntNum, uint8_t Copy_u8GroupID, uint8_t *Copy_pu8PreempPrio, uint8_t *Copy_pu8SubPrio){
-    if(Copy_pu8PreempPrio != NULL && Copy_pu8SubPrio != NULL){
-        if((Copy_u8IntNum >= _INT_NUM_0_ && Copy_u8IntNum <= _INT_NUM_67_)
-           && (Copy_u8GroupID >= _NVIC_PR_G1_ && Copy_u8GroupID <= _NVIC_PR_G5_)){
+ErrorStates_t NVIC_enuGetInterruptPriority(uint8_t Copy_u8IntNum, uint8_t* Copy_u8GroupID, uint8_t *Copy_pu8PreempPrio, uint8_t *Copy_pu8SubPrio){
+    if(Copy_pu8PreempPrio != NULL && Copy_pu8SubPrio != NULL && Copy_u8GroupID != NULL){
+        if(Copy_u8IntNum >= _INT_NUM_0_ && Copy_u8IntNum <= _INT_NUM_67_){
+            // read the priority group from the AIRC of system control block
+            *Copy_u8GroupID = ((SCB_AIRCR >> 8) & 0x7);
             // read the ipr register corresponding to the interrupt number
             *Copy_pu8SubPrio = (NVIC_Regs->IPRx[Copy_u8IntNum] >> (8 - _NVIC_PRIO_BITS_));            
             // get the preemption priority regarding the group id
-            *Copy_pu8PreempPrio = (*Copy_pu8SubPrio >> (_NVIC_PRIO_BITS_ - Copy_u8GroupID));
+            *Copy_pu8PreempPrio = (*Copy_pu8SubPrio >> (_NVIC_PRIO_BITS_ - *Copy_u8GroupID));
             // get the sub priority regarding the group id
-            *Copy_pu8SubPrio = (*Copy_pu8SubPrio & ((uint8_t)0x0f >> Copy_u8GroupID));
+            *Copy_pu8SubPrio = (*Copy_pu8SubPrio & ((uint8_t)0x0f >> *Copy_u8GroupID));
             return ES_OK; // everything is ok
         }else{
             return ES_OUT_OF_RANGE; // interrupt num or group id is out of range
