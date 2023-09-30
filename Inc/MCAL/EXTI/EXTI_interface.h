@@ -159,7 +159,7 @@
 
 
 /**
- * @name 
+ * @name EXTI_enuInit
  * @param void
  * @brief initializing the external interrupt peripheral
  *        enabling the selected ones and setting their
@@ -178,42 +178,105 @@
 ErrorStates_t EXTI_enuInit(void);
 
 /**
- * @name 
- * @param 
- * @brief 
- * @return
- * @pre
- * @post
+ * @name EXTI_enuExtiSetConfiguration
+ * @brief use this function to set the configuration for a specific external
+ *        interrupt line and enables its mask.
+ *        possible values for the configuration are:
+ *        @ref EXTERNAL_INT_ID for External interrupt lines
+ *        @ref EDGE_TRIGGERS for edge trigger configuration
+ *        @example
+ *         EXTI_enuExtiSetConfiguration(&(ST_EXTI_t) {
+ *          .EXTI_u8ExIntID = EXTI_LINE0,
+ *          .EXTI_u8EdgeID = EXTI_TRIG_RISING
+ *        }); // this will set the external interrupt line 0 to be triggered on rising edge
+ * @param Copy_pstExtiConfig 
+ * @return - ES_OK (ErrorStates_t)
+ *           if the configuration is set successfully.
+ *         - ES_NULL_POINTER (ErrorStates_t)
+ *           if the configuration pointer is NULL.
+ *         - ES_OUT_OF_RANGE (ErrorStates_t)
+ *           if the selected external interrupt source is out of range. 
+ * @pre none
+ * @post none
  */
-ErrorStates_t EXTI_enuEnableExInterrupt(uint8_t Copy_u8ExIntID);
+ErrorStates_t EXTI_enuExtiSetConfiguration(ST_EXTI_t* Copy_pstExtiConfig);
 
 /**
- * @name 
- * @param 
- * @brief 
- * @return
- * @pre
- * @post
+ * @name EXTI_enuEnableExtiMask
+ * @brief this function is used to enable the interrupt mask for a specific
+ * @param Copy_u8ExIntID (uint8_t)
+ *        this parameter is used to select the external interrupt source.
+ * @return - ES_OK (ErrorStates_t)
+ *           if the interrupt mask is enabled successfully.
+ *         - ES_OUT_OF_RANGE (ErrorStates_t)
+ *           if the selected external interrupt source is out of range.
+ * @pre External interrupt source is configured in initialization function @ref EXTI_enuInit.
+ *      or during run time using @ref EXTI_enuExtiSetConfiguration.
+ * @post none.
  */
-ErrorStates_t EXTI_enuDisableExInterrupt(uint8_t Copy_u8ExIntID);
+ErrorStates_t EXTI_enuEnableExtiMask(uint8_t Copy_u8ExIntID);
 
 /**
- * @name 
- * @param 
- * @brief 
- * @return
- * @pre
- * @post
+ * @name EXTI_enuDisableExtiMask
+ * @brief this function is used to disable the interrupt mask for a specific
+ * @param Copy_u8ExIntID (uint8_t)
+ *        this parameter is used to select the external interrupt source.
+ * @return - ES_OK (ErrorStates_t)
+ *           if the interrupt mask is disabled successfully.
+ *         - ES_OUT_OF_RANGE (ErrorStates_t)
+ *           if the selected external interrupt source is out of range.
+ */
+ErrorStates_t EXTI_enuDisableExtiMask(uint8_t Copy_u8ExIntID);
+
+/**
+ * @brief this function is used to generate a software interrupt for a specific
+ *        external interrupt source.
+ * @param Copy_u8ExIntID (uint8_t)
+ *        this parameter is used to select the external interrupt source.
+ * @return - ES_OK (ErrorStates_t)
+ *           if the interrupt mask is disabled successfully.
+ *         - ES_OUT_OF_RANGE (ErrorStates_t)
+ *           if the selected external interrupt source is out of range.
+ */
+ErrorStates_t EXTI_enuGenerateSoftwareEvent(uint8_t Copy_u8ExIntID);
+
+/**
+ * @name EXTI_enuSetEdgeTrigger
+ * @brief this function is used to set the edge trigger for a specific
+ *        external interrupt line.
+ * @param Copy_u8ExIntID (uint8_t)
+ *        this parameter is used to select the external interrupt source.
+ * @param Copy_u8EdgeID (uint8_t)
+ *        this parameter is used to select the edge trigger for the selected
+ * @return - ES_OK (ErrorStates_t)
+ *           if the interrupt mask is disabled successfully.
+ *         - ES_OUT_OF_RANGE (ErrorStates_t)
+ *           if the selected external interrupt source is out of range,
+ *           or the selected edge trigger is out of range.
+ *         - ES_NOK (ErrorStates_t)
+ *           if the interrupt mask is not disabled successfully.
  */
 ErrorStates_t EXTI_enuSetEdgeTrigger(uint8_t Copy_u8ExIntID, uint8_t Copy_u8EdgeID);
 
 /**
- * @name 
- * @param 
- * @brief 
- * @return
- * @pre
- * @post
+ * @name EXTI_enuSetInterruptHandler
+ * @brief this function is used to set the interrupt handler for a specific
+ *        external interrupt source.
+ * @param Copy_u8ExIntID (uint8_t)
+ *        this parameter is used to select the external interrupt source.
+ * @param Copy_pvHandler (void (*)(void*))
+ *        this parameter is used to set the interrupt handler for the selected
+ * @param Copy_pvParameter (void*)
+ *        this parameter is used to set the parameters for a specific interrupt
+ *        handler.
+ * @return - ES_OK (ErrorStates_t)
+ *           if the interrupt handler is set successfully.
+ *         - ES_OUT_OF_RANGE (ErrorStates_t)
+ *           if the selected external interrupt source is out of range.
+ *         - ES_NULL_POINTER (ErrorStates_t)
+ *          if the interrupt handler is NULL.
+ * @pre enabling the interrupt source in the configuration file @ref ENABELED_INTERRUPTS.
+ * @post none.
  */
 ErrorStates_t EXTI_enuSetInterruptHandler(uint8_t Copy_u8ExIntID, void (*Copy_pvHandler)(void*), void* Copy_pvParameter);
 

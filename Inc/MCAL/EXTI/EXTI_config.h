@@ -45,6 +45,8 @@ typedef struct ST_EXTI_config
  *        this field refers to the external interrupt configuration
  *         possible values are: @ref EXTERNAL_INTERRUPTS
  * @param edgeTrigger
+ *       this field refers to the edge trigger configuration,
+ *       possible values are: @ref EDGE_TRIGGERS
  */
 typedef struct ST_EXTI
 {
