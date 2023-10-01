@@ -3,6 +3,5 @@
 Debug
 .settings
 .vscode
-HAL
 fill.c
 out.exe

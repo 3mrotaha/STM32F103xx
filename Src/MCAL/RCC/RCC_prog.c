@@ -60,7 +60,7 @@ void RCC_vidInit(void){
         RCC_ClkRdyTimeout++;    
 #endif
 #endif
-// set the mcu clock output source
+// set the mcu clock output source    
     RCC_Regs->CFGR &= ~(7 << 24);
     RCC_Regs->CFGR |= (SET_MCU_CLK_OUTPUT_SRC << 24);
 /* set system prescalers */

@@ -8,6 +8,16 @@
 #ifndef LIB_MATH_H_
 #define LIB_MATH_H_
 
+// bit masks
+#define BIT_MASK    1
+#define BIT_MASK_2  3
+#define BIT_MASK_3  7
+#define NIBBLE_MASK 0x0F
+#define BIT_MASK_5  31
+#define BIT_MASK_6  63
+#define BIT_MASK_7  127
+#define BYTE_MASK   0xFF
+#define WORD_MASK   0xFFFF
 
 #define SET_BIT(Reg, b_num)		Reg |= 1 << b_num
 
