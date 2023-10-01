@@ -136,14 +136,14 @@ uint8_t NVIC_enuGetActiveFlag(uint8_t Copy_u8IntNum){
 ErrorStates_t NVIC_enuSetInterruptPriority(uint8_t Copy_u8IntNum, uint8_t Copy_u8GroupID, uint8_t Copy_u8PreempPrio, uint8_t Copy_u8SubPrio){
     // check boundaries
     if((Copy_u8IntNum >= _INT_NUM_0_ && Copy_u8IntNum <= _INT_NUM_67_) 
-        && (Copy_u8GroupID >= _NVIC_PR_G1_ && Copy_u8GroupID <= _NVIC_PR_G5_)
-        && (Copy_u8PreempPrio >= _NVIC_P_PREE_L1_ && Copy_u8PreempPrio <= _NVIC_P_PREE_L4_)
-        && (Copy_u8SubPrio >= _NVIC_P_SUB_L1_ && Copy_u8SubPrio <= _NVIC_P_SUB_L4_)){
+        && (Copy_u8GroupID >= _NVIC_PR_G0_ && Copy_u8GroupID <= _NVIC_PR_G4_)
+        && (Copy_u8PreempPrio >= _NVIC_P_PREE_L0_ && Copy_u8PreempPrio <= _NVIC_P_PREE_L4_)
+        && (Copy_u8SubPrio >= _NVIC_P_SUB_L0_ && Copy_u8SubPrio <= _NVIC_P_SUB_L4_)){
         // set the priority group in the AIRCR in system control register
         /*write this value on vectkey to enable write*/
         SCB_AIRCR = (((uint32_t)0x05FA << 16) | ((uint32_t)(Copy_u8GroupID + _NVIC_PRIO_BITS_ - 1) << 8));
         // as the ipr supports byte access, there is no need to clear it first
-        NVIC_Regs->IPRx[Copy_u8IntNum] = (Copy_u8PreempPrio << (8 - _NVIC_PRIO_BITS_ + Copy_u8GroupID)) | (Copy_u8SubPrio << (8 - _NVIC_PRIO_BITS_));
+        NVIC_Regs->IPRx[Copy_u8IntNum] = (uint8_t)((Copy_u8PreempPrio << (8 - _NVIC_PRIO_BITS_ + Copy_u8GroupID)) | (Copy_u8SubPrio << (8 - _NVIC_PRIO_BITS_)));
         return ES_OK;
     }else{
         return ES_OUT_OF_RANGE;
