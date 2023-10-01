@@ -48,4 +48,15 @@ ErrorStates_t LED_enuTurnON(uint8_t Copy_u8LedId);
  */
 ErrorStates_t LED_enuTurnOFF(uint8_t Copy_u8LedId);
 
+/**
+ * @name LED_enuToggle
+ * @brief Toggle the LED with the specified ID.
+ * 
+ * @param Copy_u8LedId The ID of the LED to toggle.
+ * @return - ES_OK: The operation is executed successfully.
+ *         - ES_NOK: The operation is not executed successfully.
+ *         - ES_OUT_OF_RANGE: The ID is out of range.
+ */
+ErrorStates_t LED_enuToggle(uint8_t Copy_u8LedId);
+
 #endif /* HAL_LED_LED_INTERFACE_H_ */

@@ -12,10 +12,10 @@
 #define LED_NUM	5
 
 typedef struct{
-	uint8_t SW_u8PortID;
-	uint8_t SW_u8PinID;
-	uint8_t SW_u8Connection;
-	uint8_t SW_u8State;
+	uint8_t LED_u8PortID;
+	uint8_t LED_u8PinID;
+	uint8_t LED_u8Connection;
+	uint8_t LED_u8State;
 }LED_t;
 
 

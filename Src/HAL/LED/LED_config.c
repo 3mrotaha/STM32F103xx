@@ -9,7 +9,7 @@
 #include "../../../Inc/HAL/LED/LED_config.h"
 #include "../../../Inc/HAL/LED/LED_interface.h"
 
-LED_t SW_AstrLEDs[LED_NUM] = {
+LED_t LED_AstrLEDs[LED_NUM] = {
 		{GPIO_PORTA, GPIO_PIN_1, LED_SINK, GPIO_OUTPUT_LOW},
 		{GPIO_PORTA, GPIO_PIN_2, LED_SOURCE, GPIO_OUTPUT_LOW},
 		{GPIO_PORTA, GPIO_PIN_3, LED_SOURCE, GPIO_OUTPUT_LOW},
