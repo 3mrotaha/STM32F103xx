@@ -14,11 +14,12 @@
  * @date 30-9-2023
  * @version v3.0
  */
+
 #include "../../../Inc/LIB/std_types.h"
 #include "../../../Inc/LIB/Error_States.h"
 #include "../../../Inc/LIB/Math.h"
 
-#include "../../MCAL/GPIO/GPIO_interface.h"
+#include "../../../Inc/MCAL/GPIO/GPIO_interface.h"
 
 #include "../../../Inc/HAL/KEYPAD/KEYPAD_private.h"
 #include "../../../Inc/HAL/KEYPAD/KEYPAD_config.h"
@@ -68,15 +69,10 @@ ErrorStates_t KPAD_enuGetPressedkey(uint8_t Copy_u8KpadID, uint8_t* Copy_puint8V
 			for(Local_uint8RowsIterator = 0; Local_uint8RowsIterator < NUM_OF_ROWS; Local_uint8RowsIterator++){
 				Local_enuErrorStates = GPIO_enuGetPinValue(KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Port, KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Pin, &Local_uint8GetKey);
 				if(!Local_uint8GetKey){
-					_delay_ms(5);
 					Local_enuErrorStates = GPIO_enuGetPinValue(KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Port, KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Pin, &Local_uint8GetKey);
-					if(!Local_uint8GetKey){
-						_delay_ms(5);
-						while(!Local_uint8GetKey){
-							Local_enuErrorStates = GPIO_enuGetPinValue(KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Port, KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Pin, &Local_uint8GetKey);
-						}
-						*Copy_puint8Value = KPAD_Auint8PadKeys[Local_uint8RowsIterator][Local_uint8ColsIterator];
-					}
+					while(!Local_uint8GetKey)
+						Local_enuErrorStates = GPIO_enuGetPinValue(KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Port, KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Pin, &Local_uint8GetKey);
+					*Copy_puint8Value = KPAD_Auint8PadKeys[Local_uint8RowsIterator][Local_uint8ColsIterator];
 				}
 			}
 			Local_enuErrorStates = GPIO_enuSetPinValue(KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strCols[Local_uint8ColsIterator].C_u8Port, KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strCols[Local_uint8ColsIterator].C_u8Pin, GPIO_OUTPUT_HIGH);
