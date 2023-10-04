@@ -17,16 +17,9 @@
 
 #include "../../../Inc/MCAL/RCC/RCC_private.h"
 #include "../../../Inc/MCAL/RCC/RCC_config.h"
-
+#include "../../../Inc/MCAL/GPIO/GPIO_interface.h"
 
 void RCC_vidInit(void){
-    // set the system clock source
-    CLEAR_BIT(RCC_Regs->CFGR, 0);
-    CLEAR_BIT(RCC_Regs->CFGR, 1);
-    RCC_Regs->CFGR |= (0x3 & SET_SYSTEM_CLOCK_SOURCE);
-    // Set the clock security system
-    CLEAR_BIT(RCC_Regs->CR, 19);
-    RCC_Regs->CR |= (SET_CLOCK_SECURITY_SYSTEM << 19);
     // set the external clock type
 #if SET_SYSTEM_CLOCK_SOURCE == RCC_HSE_BYPASS || SET_SYSTEM_CLOCK_SOURCE == RCC_HSE
     // set the external clock to be bypass
@@ -60,9 +53,6 @@ void RCC_vidInit(void){
         RCC_ClkRdyTimeout++;    
 #endif
 #endif
-// set the mcu clock output source    
-    RCC_Regs->CFGR &= ~(7 << 24);
-    RCC_Regs->CFGR |= (SET_MCU_CLK_OUTPUT_SRC << 24);
 /* set system prescalers */
 // AHB bus prescaler
     // clear the bits of the HPRE
@@ -89,6 +79,16 @@ void RCC_vidInit(void){
     RCC_Regs->CFGR &= ~(0x7 << 14);
     // set the value of the prescaler
     RCC_Regs->CFGR |= (SET_ADC_PRESCALER << 14);
+    // set the system clock source
+    CLEAR_BIT(RCC_Regs->CFGR, 0);
+    CLEAR_BIT(RCC_Regs->CFGR, 1);
+    RCC_Regs->CFGR |= (0x3 & SET_SYSTEM_CLOCK_SOURCE);
+	// set the mcu clock output source
+	RCC_Regs->CFGR &= ~(7 << 24);
+	RCC_Regs->CFGR |= (SET_MCU_CLK_OUTPUT_SRC << 24);
+    // Set the clock security system
+    CLEAR_BIT(RCC_Regs->CR, 19);
+    RCC_Regs->CR |= (SET_CLOCK_SECURITY_SYSTEM << 19);
 }
 
 ErrorStates_t RCC_enuEnablePeripheralClock(uint8_t Copy_u8BusID, uint8_t Copy_u8PeripheralID){

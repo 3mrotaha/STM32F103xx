@@ -22,7 +22,7 @@ ErrorStates_t SEVSEG_enuInit(void){
     if(SEVEN_SEGMENTS_NUM > 0){
         ErrorStates_t local_enuError = ES_NOK;
         GPIO_PinConfig_t local_stGpioConfig = {
-            .mode = GPIO_OUTPUT_2MHZ,
+            .mode = GPIO_OUTPUT_10MHZ,
             .config = GPIO_OUTPUT_PUSHPULL,
             .value = GPIO_OUTPUT_LOW
         };
@@ -60,9 +60,8 @@ ErrorStates_t SEVSEG_enuInit(void){
             }else{
                 return ES_OUT_OF_RANGE;
             }
-
-            return local_enuError == ES_OK? local_enuError: ES_NOK;
         }
+            return local_enuError == ES_OK? local_enuError: ES_NOK;
     }else{
         return ES_OUT_OF_RANGE;
     }
@@ -72,21 +71,21 @@ ErrorStates_t SEVSEG_enuDisplayDigit(uint8_t Copy_u8SevSegId, uint8_t Copy_u8Dig
     if(Copy_u8SevSegId < SEVEN_SEGMENTS_NUM){
         ErrorStates_t local_enuError = ES_NOK;
         if(SEVSEG_astConfig[Copy_u8SevSegId].SS_u8Com == _COM_CATHODE_){
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSA_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSA_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 0);
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSB_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSB_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 1);
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSC_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSC_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 2);
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSD_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSD_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 3);
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSE_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSE_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 4);
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSF_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSF_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 5);
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSG_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSG_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 6);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSA_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSA_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] >> 0) & BIT_MASK);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSB_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSB_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] >> 1) & BIT_MASK);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSC_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSC_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] >> 2) & BIT_MASK);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSD_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSD_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] >> 3) & BIT_MASK);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSE_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSE_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] >> 4) & BIT_MASK);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSF_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSF_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] >> 5) & BIT_MASK);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSG_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSG_u8Pin, (SEVSEG_au8Values[Copy_u8Digit] >> 6) & BIT_MASK);
         }else if(SEVSEG_astConfig[Copy_u8SevSegId].SS_u8Com == _COM_ANODE_){
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSA_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSA_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 0);
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSB_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSB_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 1);
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSC_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSC_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 2);
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSD_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSD_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 3);
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSE_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSE_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 4);
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSF_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSF_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 5);
-            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSG_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSG_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] & BIT_MASK) >> 6);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSA_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSA_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] >> 0) & BIT_MASK);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSB_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSB_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] >> 1) & BIT_MASK);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSC_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSC_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] >> 2) & BIT_MASK);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSD_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSD_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] >> 3) & BIT_MASK);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSE_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSE_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] >> 4) & BIT_MASK);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSF_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSF_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] >> 5) & BIT_MASK);
+            local_enuError = GPIO_enuSetPinValue(SEVSEG_astConfig[Copy_u8SevSegId].SSG_u8Port, SEVSEG_astConfig[Copy_u8SevSegId].SSG_u8Pin, ~(SEVSEG_au8Values[Copy_u8Digit] >> 6) & BIT_MASK);
         }else{
             return ES_OUT_OF_RANGE;
         }

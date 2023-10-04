@@ -57,8 +57,11 @@ void GPIO_vidInit(void){
     // locking sequence
     SET_BIT(lockReg, 16);
     GPIOA_Regs->LCKR = lockReg;
-    CLEAR_BIT(GPIOA_Regs->LCKR, 16);
-    SET_BIT(GPIOA_Regs->LCKR, 16);
+    CLEAR_BIT(lockReg, 16);
+    GPIOA_Regs->LCKR = lockReg;
+    SET_BIT(lockReg, 16);
+    GPIOA_Regs->LCKR = lockReg;
+    lockReg = GET_BIT(GPIOA_Regs->LCKR, 16);
     lockReg = GET_BIT(GPIOA_Regs->LCKR, 16);
 #endif
 
@@ -95,8 +98,11 @@ void GPIO_vidInit(void){
     // locking sequence
     SET_BIT(lockReg, 16);
     GPIOB_Regs->LCKR = lockReg;
-    CLEAR_BIT(GPIOB_Regs->LCKR, 16);
-    SET_BIT(GPIOB_Regs->LCKR, 16);
+    CLEAR_BIT(lockReg, 16);
+    GPIOB_Regs->LCKR = lockReg;
+    SET_BIT(lockReg, 16);
+    GPIOB_Regs->LCKR = lockReg;
+    lockReg = GET_BIT(GPIOB_Regs->LCKR, 16);
     lockReg = GET_BIT(GPIOB_Regs->LCKR, 16);
 #endif
 
@@ -133,8 +139,11 @@ void GPIO_vidInit(void){
     // locking sequence
     SET_BIT(lockReg, 16);
     GPIOC_Regs->LCKR = lockReg;
-    CLEAR_BIT(GPIOC_Regs->LCKR, 16);
-    SET_BIT(GPIOC_Regs->LCKR, 16);
+    CLEAR_BIT(lockReg, 16);
+    GPIOC_Regs->LCKR = lockReg;
+    SET_BIT(lockReg, 16);
+    GPIOC_Regs->LCKR = lockReg;
+    lockReg = GET_BIT(GPIOC_Regs->LCKR, 16);
     lockReg = GET_BIT(GPIOC_Regs->LCKR, 16);
 #endif
 
@@ -171,8 +180,11 @@ void GPIO_vidInit(void){
     // locking sequence
     SET_BIT(lockReg, 16);
     GPIOD_Regs->LCKR = lockReg;
-    CLEAR_BIT(GPIOD_Regs->LCKR, 16);
-    SET_BIT(GPIOD_Regs->LCKR, 16);
+    CLEAR_BIT(lockReg, 16);
+    GPIOD_Regs->LCKR = lockReg;
+    SET_BIT(lockReg, 16);
+    GPIOD_Regs->LCKR = lockReg;
+    lockReg = GET_BIT(GPIOD_Regs->LCKR, 16);
     lockReg = GET_BIT(GPIOD_Regs->LCKR, 16);
 #endif
 
@@ -209,8 +221,11 @@ void GPIO_vidInit(void){
     // locking sequence    
     SET_BIT(lockReg, 16);
     GPIOE_Regs->LCKR = lockReg;
-    CLEAR_BIT(GPIOE_Regs->LCKR, 16);
-    SET_BIT(GPIOE_Regs->LCKR, 16);
+    CLEAR_BIT(lockReg, 16);
+    GPIOE_Regs->LCKR = lockReg;
+    SET_BIT(lockReg, 16);
+    GPIOE_Regs->LCKR = lockReg;
+    lockReg = GET_BIT(GPIOE_Regs->LCKR, 16);
     lockReg = GET_BIT(GPIOE_Regs->LCKR, 16);
 #endif
 }
@@ -505,14 +520,17 @@ ErrorStates_t GPIO_enuLockPin(uint8_t Copy_u8PortId, uint8_t Copy_u8PinId){
             default:
                 return ES_NOK;
         }
+
+
         // perform the locking using the locking sequence
-        tempRegs->LCKR |= (1 << Copy_u8PinId);
-        tempRegs->LCKR |= (1 << 16); // set the lock bit
-        tempRegs->LCKR &= ~(1 << 16); // clear the lock bit
-        tempRegs->LCKR |= (1 << 16); // set the lock bit
         uint16_t tempVal = tempRegs->LCKR; // read the lock register        
-        
-        if(!(tempRegs->LCKR >> 16)) // if it reads 0
+        tempRegs->LCKR =  tempVal | (1 << 16)  | (1 << Copy_u8PinId); // set the lock bit
+        tempRegs->LCKR = (tempVal & ~(1 << 16))| (1 << Copy_u8PinId); // clear the lock bit
+        tempRegs->LCKR =  tempVal | (1 << 16)   | (1 << Copy_u8PinId); // set the lock bit
+        tempVal = tempRegs->LCKR; // read the lock register
+        tempVal = tempRegs->LCKR; // read the lock register
+
+        if(!(tempVal >> 16)) // if it reads 0
             return ES_NOK; // locking error happened
         return ES_OK; // return ok if it reads 1, locking successful
     }else{

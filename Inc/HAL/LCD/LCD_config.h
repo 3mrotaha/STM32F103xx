@@ -35,14 +35,14 @@
 #define D3_PORT         GPIO_PORTB
 #define D3_PIN          GPIO_PIN_7
 
-#define D2_PORT         GPIO_PORTC
-#define D2_PIN          GPIO_PIN_0
+#define D2_PORT         GPIO_PORTB
+#define D2_PIN          GPIO_PIN_8
 
-#define D1_PORT         GPIO_PORTC
-#define D1_PIN          GPIO_PIN_1
+#define D1_PORT         GPIO_PORTB
+#define D1_PIN          GPIO_PIN_9
 
-#define D0_PORT       	GPIO_PORTC
-#define D0_PIN        	GPIO_PIN_2
+#define D0_PORT       	GPIO_PORTB
+#define D0_PIN        	GPIO_PIN_10
 
 #define FRACTION_MAX_RANGE	4
 

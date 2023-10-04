@@ -9,7 +9,7 @@
 #define HAL_SEVEN_SEGMENT_SEVSEG_CONFIG_H_
 #include "../../LIB/std_types.h"
 
-#define SEVEN_SEGMENTS_NUM  1
+#define SEVEN_SEGMENTS_NUM  4
 
 typedef struct{
     uint8_t SS_u8Com;

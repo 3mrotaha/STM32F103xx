@@ -40,21 +40,6 @@
  * @ref PLL_MULTI_VALUES
  * use these definitions to set the PLL multiplication value
  * 
- * PLL_MULTIPLICATION_2 -> PLL multiplication by 2
- * PLL_MULTIPLICATION_3 -> PLL multiplication by 3
- * PLL_MULTIPLICATION_4 -> PLL multiplication by 4
- * PLL_MULTIPLICATION_5 -> PLL multiplication by 5
- * PLL_MULTIPLICATION_6 -> PLL multiplication by 6
- * PLL_MULTIPLICATION_7 -> PLL multiplication by 7
- * PLL_MULTIPLICATION_8 -> PLL multiplication by 8
- * PLL_MULTIPLICATION_9 -> PLL multiplication by 9
- * PLL_MULTIPLICATION_10 -> PLL multiplication by 10
- * PLL_MULTIPLICATION_11 -> PLL multiplication by 11
- * PLL_MULTIPLICATION_12 -> PLL multiplication by 12
- * PLL_MULTIPLICATION_13 -> PLL multiplication by 13
- * PLL_MULTIPLICATION_14 -> PLL multiplication by 14
- * PLL_MULTIPLICATION_15 -> PLL multiplication by 15
- * PLL_MULTIPLICATION_16 -> PLL multiplication by 16
  */
 #define PLL_MULTIPLICATION_2            PLL_2
 #define PLL_MULTIPLICATION_3            PLL_3

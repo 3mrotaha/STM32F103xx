@@ -8,6 +8,7 @@
 #include "../../../Inc/LIB/Error_States.h"
 #include "../../../Inc/LIB/Math.h"
 
+#include "../../../Inc/MCAL/SysTick/SysTick_interface.h"
 #include "../../../Inc/MCAL/GPIO/GPIO_interface.h"
 
 #include "../../../Inc/HAL/LCD/LCD_private.h"
@@ -21,36 +22,36 @@ ErrorStates_t LCD_enuInit(void){
 		.config = GPIO_OUTPUT_PUSHPULL,
 		.value = GPIO_OUTPUT_LOW
 	};
-	Local_enuErrorStates = GPIO_enuSetPinConfigurations(RS_PORT, RS_PIN, Local_PinConfig);
-	Local_enuErrorStates = GPIO_enuSetPinConfigurations(RW_PORT, RW_PIN, Local_PinConfig);
-	Local_enuErrorStates = GPIO_enuSetPinConfigurations(EN_PORT, EN_PIN, Local_PinConfig);
+	Local_enuErrorStates = GPIO_enuSetPinConfiguration(RS_PORT, RS_PIN, &Local_PinConfig);
+	Local_enuErrorStates = GPIO_enuSetPinConfiguration(RW_PORT, RW_PIN, &Local_PinConfig);
+	Local_enuErrorStates = GPIO_enuSetPinConfiguration(EN_PORT, EN_PIN, &Local_PinConfig);
 
-	Local_enuErrorStates = GPIO_enuSetPinConfigurations(D7_PORT, D7_PIN, Local_PinConfig);
-	Local_enuErrorStates = GPIO_enuSetPinConfigurations(D6_PORT, D6_PIN, Local_PinConfig);
-	Local_enuErrorStates = GPIO_enuSetPinConfigurations(D5_PORT, D5_PIN, Local_PinConfig);
-	Local_enuErrorStates = GPIO_enuSetPinConfigurations(D4_PORT, D4_PIN, Local_PinConfig);
-	_delay_ms(30);
+	Local_enuErrorStates = GPIO_enuSetPinConfiguration(D7_PORT, D7_PIN, &Local_PinConfig);
+	Local_enuErrorStates = GPIO_enuSetPinConfiguration(D6_PORT, D6_PIN, &Local_PinConfig);
+	Local_enuErrorStates = GPIO_enuSetPinConfiguration(D5_PORT, D5_PIN, &Local_PinConfig);
+	Local_enuErrorStates = GPIO_enuSetPinConfiguration(D4_PORT, D4_PIN, &Local_PinConfig);
+	SysTick_vidDelayMs(30);
 #if LCD_BIT_MODE == EIGHT_BIT_MODE
 
-	Local_enuErrorStates = GPIO_enuSetPinConfigurations(D3_PORT, D3_PIN, Local_PinConfig);
-	Local_enuErrorStates = GPIO_enuSetPinConfigurations(D2_PORT, D2_PIN, Local_PinConfig);
-	Local_enuErrorStates = GPIO_enuSetPinConfigurations(D1_PORT, D1_PIN, Local_PinConfig);
-	Local_enuErrorStates = GPIO_enuSetPinConfigurations(D0_PORT, D0_PIN, Local_PinConfig);
+	Local_enuErrorStates = GPIO_enuSetPinConfiguration(D3_PORT, D3_PIN, &Local_PinConfig);
+	Local_enuErrorStates = GPIO_enuSetPinConfiguration(D2_PORT, D2_PIN, &Local_PinConfig);
+	Local_enuErrorStates = GPIO_enuSetPinConfiguration(D1_PORT, D1_PIN, &Local_PinConfig);
+	Local_enuErrorStates = GPIO_enuSetPinConfiguration(D0_PORT, D0_PIN, &Local_PinConfig);
 
 	Local_enuErrorStates = LCD_enuToSendCommand(_FUNCTION_SET_CMD_ | _EIGHT_BIT_INTERFACE_ | _TWO_LINE_LCD_ | _FIVE_BY_EIGHT_FONT_);
-	_delay_ms(1);
+	SysTick_vidDelayMs(1);
 
 #elif LCD_BIT_MODE == FOUR_BIT_MODE
 	Local_enuErrorStates = LCD_enuToSendCommand(_FUNCTION_SET_CMD_ | _FOUR_BIT_INTERFACE_ | _TWO_LINE_LCD_ | _FIVE_BY_EIGHT_FONT_);
-	_delay_ms(1);
+	SysTick_vidDelayMs(1);
 #endif
 
-	Local_enuErrorStates = LCD_enuToSendCommand(_DISPLAY_ON_OFF_CONTROL_CMD_ | _DISPLAY_ON_ | _CURSOR_ON_ | _BLINK_OFF_);
-	_delay_ms(1);
+	Local_enuErrorStates = LCD_enuToSendCommand(_DISPLAY_ON_OFF_CONTROL_CMD_ | _DISPLAY_ON_ | _CURSOR_ON_ | _BLINK_ON_);
+	SysTick_vidDelayMs(1);
 	Local_enuErrorStates = LCD_enuToSendCommand(_CLEAR_DISPLAY_CMD_);
-	_delay_ms(2);
-	Local_enuErrorStates = LCD_enuToSendCommand(_ENTRY_MODE_SET_CMD_ | _ENTRY_SHIFT_INCREMENT_ | _ENTRY_LEFT_);
-	_delay_ms(2);	
+	SysTick_vidDelayMs(2);
+	Local_enuErrorStates = LCD_enuToSendCommand(_ENTRY_MODE_SET_CMD_ | _ENTRY_SHIFT_DECREMENT_ | _ENTRY_LEFT_);
+	SysTick_vidDelayMs(2);	
 
 	return Local_enuErrorStates;
 }
@@ -133,9 +134,9 @@ static inline ErrorStates_t LCD_enuSendData(uint8_t Copy_u8Data){
 	Local_enuErrorStates = GPIO_enuSetPinValue(D0_PORT, D0_PIN, BIT_MASK & (Copy_u8Data >> 0));
 #elif LCD_BIT_MODE == FOUR_BIT_MODE
 	Local_enuErrorStates = GPIO_enuSetPinValue(EN_PORT, EN_PIN, GPIO_OUTPUT_HIGH);
-	_delay_ms(10);
+	SysTick_vidDelayMs(10);
 	Local_enuErrorStates = GPIO_enuSetPinValue(EN_PORT, EN_PIN, GPIO_OUTPUT_LOW);
-	_delay_ms(10);
+	SysTick_vidDelayMs(10);
 	Local_enuErrorStates = GPIO_enuSetPinValue(D7_PORT, D7_PIN, BIT_MASK & (Copy_u8Data >> 3));
 	Local_enuErrorStates = GPIO_enuSetPinValue(D6_PORT, D6_PIN, BIT_MASK & (Copy_u8Data >> 2));
 	Local_enuErrorStates = GPIO_enuSetPinValue(D5_PORT, D5_PIN, BIT_MASK & (Copy_u8Data >> 1));
@@ -143,9 +144,9 @@ static inline ErrorStates_t LCD_enuSendData(uint8_t Copy_u8Data){
 #endif
 
 	Local_enuErrorStates = GPIO_enuSetPinValue(EN_PORT, EN_PIN, GPIO_OUTPUT_HIGH);
-	_delay_ms(10);
+	SysTick_vidDelayMs(10);
 	Local_enuErrorStates = GPIO_enuSetPinValue(EN_PORT, EN_PIN, GPIO_OUTPUT_LOW);
-	_delay_ms(10);
+	SysTick_vidDelayMs(10);
 	return Local_enuErrorStates;
 }
 
@@ -168,18 +169,18 @@ static inline ErrorStates_t LCD_enuToSendCommand(uint8_t Copy_u8Command){
 #elif LCD_BIT_MODE == FOUR_BIT_MODE
 	if(Copy_u8Command == 0x28){
 		Local_enuErrorStates = GPIO_enuSetPinValue(EN_PORT, EN_PIN, GPIO_OUTPUT_HIGH);
-		_delay_ms(10);
+		SysTick_vidDelayMs(10);
 		Local_enuErrorStates = GPIO_enuSetPinValue(EN_PORT, EN_PIN, GPIO_OUTPUT_LOW);
-		_delay_ms(10);
+		SysTick_vidDelayMs(10);
 		Local_enuErrorStates = GPIO_enuSetPinValue(D7_PORT, D7_PIN, BIT_MASK & (Copy_u8Command >> 7));
 		Local_enuErrorStates = GPIO_enuSetPinValue(D6_PORT, D6_PIN, BIT_MASK & (Copy_u8Command >> 6));
 		Local_enuErrorStates = GPIO_enuSetPinValue(D5_PORT, D5_PIN, BIT_MASK & (Copy_u8Command >> 5));
 		Local_enuErrorStates = GPIO_enuSetPinValue(D4_PORT, D4_PIN, BIT_MASK & (Copy_u8Command >> 4));
 	}
 	Local_enuErrorStates = GPIO_enuSetPinValue(EN_PORT, EN_PIN, GPIO_OUTPUT_HIGH);
-	_delay_ms(10);
+	SysTick_vidDelayMs(10);
 	Local_enuErrorStates = GPIO_enuSetPinValue(EN_PORT, EN_PIN, GPIO_OUTPUT_LOW);
-	_delay_ms(10);
+	SysTick_vidDelayMs(10);
 	Local_enuErrorStates = GPIO_enuSetPinValue(D7_PORT, D7_PIN, BIT_MASK & (Copy_u8Command >> 3));
 	Local_enuErrorStates = GPIO_enuSetPinValue(D6_PORT, D6_PIN, BIT_MASK & (Copy_u8Command >> 2));
 	Local_enuErrorStates = GPIO_enuSetPinValue(D5_PORT, D5_PIN, BIT_MASK & (Copy_u8Command >> 1));
@@ -187,9 +188,9 @@ static inline ErrorStates_t LCD_enuToSendCommand(uint8_t Copy_u8Command){
 #endif
 
 	Local_enuErrorStates = GPIO_enuSetPinValue(EN_PORT, EN_PIN, GPIO_OUTPUT_HIGH);
-	_delay_ms(10);
+	SysTick_vidDelayMs(10);
 	Local_enuErrorStates = GPIO_enuSetPinValue(EN_PORT, EN_PIN, GPIO_OUTPUT_LOW);
-	_delay_ms(10);
+	SysTick_vidDelayMs(10);
 
 	return Local_enuErrorStates;
 }

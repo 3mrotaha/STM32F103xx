@@ -9,7 +9,7 @@
 #define HAL_LCD_LCD_INTERFACE_H_
 #include "../../LIB/std_types.h"
 #include "../../LIB/Error_States.h"
-
+#include "LCD_private.h"
 /**
  * @ref LCD_COMMANDS
  * @brief use these definitions to send as commands to LCD

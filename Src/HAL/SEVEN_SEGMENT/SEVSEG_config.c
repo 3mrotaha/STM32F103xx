@@ -16,7 +16,8 @@ ST_SevSegment_t SEVSEG_astConfig[SEVEN_SEGMENTS_NUM] = {
     {
         SEV_SEG_COMMON_CATHODE,
         SEV_SEG_COM_CONNECTED,
-        GPIO_PORTA, GPIO_PIN_8,        
+        GPIO_PORTA, GPIO_PIN_7,
+
         GPIO_PORTA, GPIO_PIN_0,
         GPIO_PORTA, GPIO_PIN_1,
         GPIO_PORTA, GPIO_PIN_2,
@@ -24,13 +25,14 @@ ST_SevSegment_t SEVSEG_astConfig[SEVEN_SEGMENTS_NUM] = {
         GPIO_PORTA, GPIO_PIN_4,
         GPIO_PORTA, GPIO_PIN_5,
         GPIO_PORTA, GPIO_PIN_6,
-        SEV_SEG_ENABLE_DOT,
+        SEV_SEG_DISABLE_DOT,
         GPIO_PORTA, GPIO_PIN_7,
     },
     {
         SEV_SEG_COMMON_CATHODE,
         SEV_SEG_COM_CONNECTED,
-        GPIO_PORTA, GPIO_PIN_9,        
+        GPIO_PORTA, GPIO_PIN_8,
+
         GPIO_PORTA, GPIO_PIN_0,
         GPIO_PORTA, GPIO_PIN_1,
         GPIO_PORTA, GPIO_PIN_2,
@@ -38,7 +40,37 @@ ST_SevSegment_t SEVSEG_astConfig[SEVEN_SEGMENTS_NUM] = {
         GPIO_PORTA, GPIO_PIN_4,
         GPIO_PORTA, GPIO_PIN_5,
         GPIO_PORTA, GPIO_PIN_6,
-        SEV_SEG_ENABLE_DOT,
+        SEV_SEG_DISABLE_DOT,
         GPIO_PORTA, GPIO_PIN_7,
-    }
+    },
+    {
+        SEV_SEG_COMMON_CATHODE,
+        SEV_SEG_COM_CONNECTED,
+        GPIO_PORTA, GPIO_PIN_9,
+
+        GPIO_PORTA, GPIO_PIN_0,
+        GPIO_PORTA, GPIO_PIN_1,
+        GPIO_PORTA, GPIO_PIN_2,
+        GPIO_PORTA, GPIO_PIN_3,
+        GPIO_PORTA, GPIO_PIN_4,
+        GPIO_PORTA, GPIO_PIN_5,
+        GPIO_PORTA, GPIO_PIN_6,
+        SEV_SEG_DISABLE_DOT,
+        GPIO_PORTA, GPIO_PIN_7,
+    },
+    {
+        SEV_SEG_COMMON_CATHODE,
+        SEV_SEG_COM_CONNECTED,
+        GPIO_PORTA, GPIO_PIN_10,
+
+        GPIO_PORTA, GPIO_PIN_0,
+        GPIO_PORTA, GPIO_PIN_1,
+        GPIO_PORTA, GPIO_PIN_2,
+        GPIO_PORTA, GPIO_PIN_3,
+        GPIO_PORTA, GPIO_PIN_4,
+        GPIO_PORTA, GPIO_PIN_5,
+        GPIO_PORTA, GPIO_PIN_6,
+        SEV_SEG_DISABLE_DOT,
+        GPIO_PORTA, GPIO_PIN_7,
+    },      
 };
