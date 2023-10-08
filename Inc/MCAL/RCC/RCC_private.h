@@ -32,6 +32,7 @@ typedef struct
 	uint32_t CSR;
 } ST_RCC_Regs;
 
+#define HSI_CLK_VAL	8000000UL
 /*
  * RCC Clock Types
  */
@@ -69,7 +70,7 @@ typedef struct
 /*
  * PLL_SOURCES
  */
-#define PLL_HSI 0
+#define PLL_HSI_DIV2 0
 #define PLL_HSE 1
 #define PLL_HSE_DIV2 3
 #define PLL_DISABLED 111
@@ -96,7 +97,7 @@ typedef struct
 /*
  * AHB prescalers
  */
-#define _NOT_DIVIVED_ 0
+#define _NOT_DIVIVED_ 7
 #define SYSCLK_2 8
 #define SYSCLK_4 9
 #define SYSCLK_8 10

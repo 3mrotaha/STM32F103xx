@@ -74,27 +74,37 @@ void commons_update(uint8_t en_com, uint8_t digit);
 int main(void)
 {
 	RCC_vidInit();
-	//GPIO_vidInit();
-	RCC_enuEnablePeripheralClock(APB_2_ID, IO_PORTA_ID);
-	RCC_enuEnablePeripheralClock(APB_2_ID, IO_PORTB_ID);
-	SEVSEG_enuInit();
 	LCD_enuInit();
-	GPIO_enuSetPinConfiguration(GPIO_PORTB, GPIO_PIN_11, &(GPIO_PinConfig_t){GPIO_OUTPUT_10MHZ, GPIO_OUTPUT_PUSHPULL, GPIO_OUTPUT_LOW});
-	for(;;){
-		SysTick_vidDelayMs(5);
-		GPIO_enuSetPinValue(GPIO_PORTB, GPIO_PIN_11, GPIO_OUTPUT_HIGH);
-		SysTick_vidDelayMs(5);
-		GPIO_enuSetPinValue(GPIO_PORTB, GPIO_PIN_11, GPIO_OUTPUT_LOW);
-		 for(uint32_t i = 0; i <= 99999999; i++){
-		 	LCD_enuSendCommand(CLEAR_DISPLAY_CMD);
-		 	LCD_enuDisplayInteger((sint64_t) i);
-		 	for(uint32_t j = 0; j < 5; j++){
-				commons_update(3, i%10);
-				commons_update(2, (i/10)%10);
-				commons_update(1, (i/100)%10);
-				commons_update(0, (i/1000)%10);
-		 	}
-		 }
+	uint32_t sysClk, hclk, pclk1, pclk2;
+	RCC_enuGetSysClk(&sysClk);
+	RCC_enuGetHLCK(&hclk);
+	RCC_enuGetPLCK2(&pclk2);
+	RCC_enuGetPLCK1(&pclk1);
+	while(1){
+    LCD_enuSendCommand(CLEAR_DISPLAY_CMD);
+    LCD_enuSendCommand(SET_CURSOR_POSITION(0, 0));
+    LCD_enuDisplayString("SYSCLK");
+    LCD_enuSendCommand(SET_CURSOR_POSITION(1, 0));
+		LCD_enuDisplayInteger(sysClk);
+    SysTick_vidDelayMs(5000);
+    LCD_enuSendCommand(CLEAR_DISPLAY_CMD);
+    LCD_enuSendCommand(SET_CURSOR_POSITION(0, 0));
+    LCD_enuDisplayString("HCLK");
+    LCD_enuSendCommand(SET_CURSOR_POSITION(1, 0));
+    LCD_enuDisplayInteger(hclk);
+    SysTick_vidDelayMs(5000);
+    LCD_enuSendCommand(CLEAR_DISPLAY_CMD);
+    LCD_enuSendCommand(SET_CURSOR_POSITION(0, 0));
+    LCD_enuDisplayString("PCLK1");
+    LCD_enuSendCommand(SET_CURSOR_POSITION(1, 0));
+    LCD_enuDisplayInteger(pclk1);
+    SysTick_vidDelayMs(5000);
+    LCD_enuSendCommand(CLEAR_DISPLAY_CMD);
+    LCD_enuSendCommand(SET_CURSOR_POSITION(0, 0));
+    LCD_enuDisplayString("PCLK2");
+    LCD_enuSendCommand(SET_CURSOR_POSITION(1, 0));
+    LCD_enuDisplayInteger(pclk2);
+    SysTick_vidDelayMs(5000);
 	}
 }
 

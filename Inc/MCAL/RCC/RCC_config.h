@@ -14,6 +14,14 @@
 #define MCAL_RCC_RCC_CONFIG_H_
 #include "RCC_interface.h"
 
+/**
+ * @brief this defines the value of the external clock
+ *       if the external clock is used.
+ *       the value is in Hz.
+ *       Max value is 72000000 Hz.
+ */
+#define HSE_CLOCK_VALUE             8000000UL
+
 /*
  * @ref SYSTEM_CLOCK_SOURCES
  */
@@ -22,12 +30,12 @@
 /*
  * @ref PLL_SOURCES
 */
-#define PLL_SOURCE                  PLL_HIGH_INTERNAL_OSC
+#define PLL_SOURCE                  PLL_HIGH_INTERNAL_DIV2_OSC
 
 /*
  * @ref PLL_MULTI_VALUES
  */
-#define PLL_MULTIPLICATION_VALUE    PLL_MULTIPLICATION_8
+#define PLL_MULTIPLICATION_VALUE    PLL_MULTIPLICATION_2
 
 /*
 * @ref CLOCK_SECURITY_SYSTEM
@@ -36,7 +44,7 @@
 /*
  * @ref AHB_CLOCK_PRESCALER
  */
-#define SET_AHB_CLOCK_PRESCALER     AHB_CLK_NOT_DIVIDED
+#define SET_AHB_CLOCK_PRESCALER     AHB_CLK_DIVIDED_BY_2
 
 /*
  * @ref APB1_CLOCK_PRESCALER
@@ -46,7 +54,7 @@
 /*
  * @ref APB2_CLOCK_PRESCALER
  */
-#define SET_APB2_CLOCK_PRESCALER    ABP2_CLK_NOT_DIVIDED
+#define SET_APB2_CLOCK_PRESCALER    ABP1_CLK_DIVIDED_BY_2
 
 /*
  * @ref ADC_Prescalers

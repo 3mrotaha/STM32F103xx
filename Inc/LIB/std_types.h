@@ -19,7 +19,6 @@ typedef signed long long int sint64_t;
 
 typedef float f32_t;
 typedef double f64_t;
-
 #define NULL    (void*)0
 
 #endif /* LIB_STD_TYPES_H_ */

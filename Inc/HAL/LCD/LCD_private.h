@@ -15,7 +15,7 @@
 #define _RETURN_HOME_CMD_             (0x02)
 #define _SET_CGRAM_ADDRESS_CMD_       (0x40)
 #define _SET_DDRAM_ADDRESS_CMD_       (0x80)
-
+#define _SET_CURSOR_POS_(row, col)    (0x80 | (row << 6) | col)
 // Entry Mode Set Options
 #define _ENTRY_MODE_SET_CMD_          (0x04)
 #define _ENTRY_RIGHT_                 (0x02) // Bit 1 (I/D = 1)

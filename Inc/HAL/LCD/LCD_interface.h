@@ -20,7 +20,7 @@
 #define RETURN_HOME_CMD         _RETURN_HOME_CMD_             
 #define SET_CGRAM_ADDRESS_CMD   _SET_CGRAM_ADDRESS_CMD_       
 #define SET_DDRAM_ADDRESS_CMD   _SET_DDRAM_ADDRESS_CMD_ 
-
+#define SET_CURSOR_POSITION(row, col)  _SET_CURSOR_POS_(row, col)
 /**
  * @ref ENTRY_MODE_COMMANDS
  * @breif use these definitions to send as commands to LCD

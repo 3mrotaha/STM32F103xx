@@ -6,7 +6,7 @@
  */
 #include "../../../Inc/LIB/std_types.h"
 #include "../../../Inc/LIB/Math.h"
-
+#include "../../../Inc/MCAL/RCC/RCC_interface.h"
 #include "../../../Inc/MCAL/SysTick/SysTick_private.h"
 #include "../../../Inc/MCAL/SysTick/SysTick_config.h"
 
@@ -14,8 +14,9 @@ void SysTick_vidDelayMs(uint32_t Copy_u32ms){
     // initialize system tick
     SET_BIT(SysTick_Regs->CTRL, 2); //clock source selection AHB
     CLEAR_BIT(SysTick_Regs->CTRL, 1); // inbterrupt disable
-
-    f32_t ovfTime = (((f32_t)0x00FFFFFF)/32000.0);
+    uint32_t sysClk;
+    RCC_enuGetSysClk(&sysClk);
+    f32_t ovfTime = (((f32_t)0x00FFFFFF)/((f32_t)sysClk/1000.0));
     f32_t ovfNum = Copy_u32ms / ovfTime;
     uint32_t ovfPreload = 0x00FFFFFF * (ovfNum - (uint32_t) ovfNum);
     uint32_t ovfNum_int = (uint32_t) ovfNum;

@@ -60,9 +60,9 @@
 /*
  * @ref PLL_SOURCES
 */
-#define PLL_HIGH_INTERNAL_OSC           PLL_HSI
-#define PLL_HIGH_EXTERNAL_OSC           PLL_HSE
+#define PLL_HIGH_INTERNAL_DIV2_OSC      PLL_HSI_DIV2
 #define PLL_HIGH_EXTERNAL_DIV2_OSC      PLL_HSE_DIV2
+#define PLL_HIGH_EXTERNAL_OSC           PLL_HSE
 #define PLL_NOT_ENABLED                 PLL_DISABLED
 
 /* 
@@ -197,45 +197,132 @@
 // SRAM
 #define SRAM_ID                           _SRAM_ID_
 
-/***************************************************
- * Name: RCC_vidInit
- * Params: void
- * Returns: void
- * Functionality: Initialize the System Clocks
- * Precondition: set the difinition values in the
- *               RCC_config.h file.
- * Postcondition: None
- ***************************************************/
+/*****************************************************************************
+ * @name RCC_vidInit
+ * @param None
+ * @return None
+ * @brief Initializes the RCC peripheral
+ * @pre None
+ * @post None
+ *****************************************************************************/
 void RCC_vidInit(void);
 
-/***************************************************
-* @name   - 
-* @param  -
-* @return -
-* @brief  -
-* @pre    -
-* @post   -
-***************************************************/
+
+/*****************************************************************************
+ * @name RCC_enuEnablePeripheralClock
+ * @param Copy_u8BusID (uint8_t)
+ *       - ID of the bus to enable the peripheral clock for
+ *       possible values are @ref RCC_Bus_IDs
+ * @param Copy_u8PeripheralID (uint8_t)
+ *       - ID of the peripheral to enable the clock for
+ *       possible values are @ref RCC_Peripheral_IDs
+ * @return - ES_OK (ErrorStates_t):
+ *           if the peripheral clock is enabled successfully
+ * @return - ES_OUT_OF_RANGE (ErrorStates_t):
+ *           if the bus ID or peripheral ID is out of range
+ * @brief Enables the clock for a peripheral on a specific bus
+ * @pre None
+ * @post None
+ *****************************************************************************/
 ErrorStates_t RCC_enuEnablePeripheralClock(uint8_t Copy_u8BusID, uint8_t Copy_u8PeripheralID);
 
-/***************************************************
-* @name   - 
-* @param  -
-* @return -
-* @brief  -
-* @pre    -
-* @post   -
-***************************************************/
+
+/*****************************************************************************
+ * @name RCC_enuDisablePeripheralClock
+ * @param Copy_u8BusID (uint8_t)
+ *       - ID of the bus to disable the peripheral clock for
+ *       possible values are @ref RCC_Bus_IDs
+ * @param Copy_u8PeripheralID (uint8_t)
+ *       - ID of the peripheral to disable the clock for
+ *       possible values are @ref RCC_Peripheral_IDs
+ * @return - ES_OK (ErrorStates_t):
+ *           if the peripheral clock is disabled successfully
+ * @return - ES_OUT_OF_RANGE (ErrorStates_t):
+ *           if the bus ID or peripheral ID is out of range
+ * @brief Disables the clock for a peripheral on a specific bus
+ * @pre None
+ * @post None
+ *****************************************************************************/
 ErrorStates_t RCC_enuDisablePeripheralClock(uint8_t Copy_u8BusID, uint8_t Copy_u8PeripheralID);
 
-/***************************************************
-* @name   - 
-* @param  -
-* @return -
-* @brief  -
-* @pre    -
-* @post   -
-***************************************************/
+
+/*****************************************************************************
+ * @name RCC_enuResetPeripheral
+ * @param Copy_u8BusID (uint8_t)
+ *       - ID of the bus to reset the peripheral for
+ *       possible values are @ref RCC_Bus_IDs
+ * @param Copy_u8PeripheralID (uint8_t)
+ *       - ID of the peripheral to reset
+ *       possible values are @ref RCC_Peripheral_IDs
+ * @return - ES_OK (ErrorStates_t):
+ *           if the peripheral is reset successfully
+ * @return - ES_OUT_OF_RANGE (ErrorStates_t):
+ *           if the bus ID or peripheral ID is out of range
+ * @brief Resets a peripheral on a specific bus
+ * @pre None
+ * @post None
+ *****************************************************************************/
 ErrorStates_t RCC_enuResetPeripheral(uint8_t Copy_u8BusID, uint8_t Copy_u8PeripheralID);
+
+
+/*****************************************************************************
+ * @name RCC_enuGetSysClk
+ * @param Copy_pu32SysClk (uint32_t*)
+ *       - Pointer to a variable to store the system clock frequency in Hz
+ * @return - ES_OK (ErrorStates_t):
+ *           if the system clock frequency is retrieved successfully
+ * @return - ES_NOK (ErrorStates_t):
+ *           if the system clock frequency is not retrieved successfully
+ * @brief Retrieves the system clock frequency
+ * @pre None
+ * @post None
+ *****************************************************************************/
+ErrorStates_t RCC_enuGetSysClk(uint32_t* Copy_pu32SysClk);
+
+
+/*****************************************************************************
+ * @name RCC_enuGetHLCK
+ * @param Copy_pu32HLCK (uint32_t*)
+ *       - Pointer to a variable to store the HCLK frequency in Hz
+ * @return - ES_OK (ErrorStates_t):
+ *           if the HCLK frequency is retrieved successfully
+ * @return - ES_NOK (ErrorStates_t):
+ *           if the HCLK frequency is not retrieved successfully
+ * @brief Retrieves the HCLK frequency
+ * @pre None
+ * @post None
+ *****************************************************************************/
+ErrorStates_t RCC_enuGetHLCK(uint32_t* Copy_pu32HLCK);
+
+
+/*****************************************************************************
+ * @name RCC_enuGetPLCK1
+ * @param Copy_pu32PLCK1 (uint32_t*)
+ *       - Pointer to a variable to store the PCLK1 frequency in Hz
+ * @return - ES_OK (ErrorStates_t):
+ *           if the PCLK1 frequency is retrieved successfully
+ * @return - ES_NOK (ErrorStates_t):
+ *           if the PCLK1 frequency is not retrieved successfully
+ * @brief Retrieves the PCLK1 frequency
+ * @pre None
+ * @post None
+ *****************************************************************************/
+ErrorStates_t RCC_enuGetPLCK1(uint32_t* Copy_pu32PLCK1);
+
+
+/*****************************************************************************
+ * @name RCC_enuGetPLCK2
+ * @param Copy_pu32PLCK2 (uint32_t*)
+ *       - Pointer to a variable to store the PCLK2 frequency in Hz
+ * @return - ES_OK (ErrorStates_t):
+ *           if the PCLK2 frequency is retrieved successfully
+ * @return - ES_NOK (ErrorStates_t):
+ *           if the PCLK2 frequency is not retrieved successfully
+ * @brief Retrieves the PCLK2 frequency
+ * @pre None
+ * @post None
+ *****************************************************************************/
+ErrorStates_t RCC_enuGetPLCK2(uint32_t* Copy_pu32PLCK2);
+
 
 #endif /* MCAL_RCC_RCC_INTERFACE_H_ */

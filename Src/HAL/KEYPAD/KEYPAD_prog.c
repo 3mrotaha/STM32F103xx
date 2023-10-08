@@ -20,12 +20,14 @@
 #include "../../../Inc/LIB/Math.h"
 
 #include "../../../Inc/MCAL/GPIO/GPIO_interface.h"
+#include "../../../Inc/MCAL/SysTick/SysTick_interface.h"
 
 #include "../../../Inc/HAL/KEYPAD/KEYPAD_private.h"
 #include "../../../Inc/HAL/KEYPAD/KEYPAD_config.h"
 
 static uint8_t KPAD_Auint8PadKeys[NUM_OF_ROWS][NUM_OF_COLUMNS] = PAD_KEY_VALUES;
 extern KPAD_t* KPAD_AstrKeyPadConfig;
+
 ErrorStates_t KPAD_enuInit(KPAD_t* Copy_pstrKeyPadConfig){
 	ErrorStates_t Local_enuErrorStates = ES_NOK;
 	if(Copy_pstrKeyPadConfig != NULL){
@@ -51,6 +53,7 @@ ErrorStates_t KPAD_enuInit(KPAD_t* Copy_pstrKeyPadConfig){
 				});
 			}
 		}
+		return Local_enuErrorStates == ES_OK ? ES_OK : ES_NOK;
 	}
 	else{
 		Local_enuErrorStates = ES_NULL_POINTER;
@@ -68,15 +71,21 @@ ErrorStates_t KPAD_enuGetPressedkey(uint8_t Copy_u8KpadID, uint8_t* Copy_puint8V
 			Local_enuErrorStates = GPIO_enuSetPinValue(KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strCols[Local_uint8ColsIterator].C_u8Port, KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strCols[Local_uint8ColsIterator].C_u8Pin, GPIO_OUTPUT_LOW);
 			for(Local_uint8RowsIterator = 0; Local_uint8RowsIterator < NUM_OF_ROWS; Local_uint8RowsIterator++){
 				Local_enuErrorStates = GPIO_enuGetPinValue(KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Port, KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Pin, &Local_uint8GetKey);
+				SysTick_vidDelayMs(10);
 				if(!Local_uint8GetKey){
 					Local_enuErrorStates = GPIO_enuGetPinValue(KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Port, KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Pin, &Local_uint8GetKey);
-					while(!Local_uint8GetKey)
-						Local_enuErrorStates = GPIO_enuGetPinValue(KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Port, KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Pin, &Local_uint8GetKey);
+					SysTick_vidDelayMs(10);
+					while(!Local_uint8GetKey){
+						Local_enuErrorStates = GPIO_enuGetPinValue(KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Port, KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strRows[Local_uint8RowsIterator].R_u8Pin, &Local_uint8GetKey);						
+						SysTick_vidDelayMs(10);
+					}
 					*Copy_puint8Value = KPAD_Auint8PadKeys[Local_uint8RowsIterator][Local_uint8ColsIterator];
+					return ES_OK; // key is pressed
 				}
 			}
 			Local_enuErrorStates = GPIO_enuSetPinValue(KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strCols[Local_uint8ColsIterator].C_u8Port, KPAD_AstrKeyPadConfig[Copy_u8KpadID].KPAD_strCols[Local_uint8ColsIterator].C_u8Pin, GPIO_OUTPUT_HIGH);
 		}
+		return ES_NOK; // no key is pressed
 	}
 	else{
 		Local_enuErrorStates = ES_NULL_POINTER;
