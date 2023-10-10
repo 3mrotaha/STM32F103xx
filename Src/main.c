@@ -28,6 +28,9 @@
 #include "../Inc/MCAL/EXTI/EXTI_config.h"
 #include "../Inc/MCAL/EXTI/EXTI_interface.h"
 
+#include "../Inc/MCAL/UART/UART_config.h"
+#include "../Inc/MCAL/UART/UART_interface.h"
+
 #include "../Inc/MCAL/SysTick/SysTick_interface.h"
 
 #include "../Inc/HAL/LED/LED_interface.h"
@@ -40,77 +43,29 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-volatile void delay1s(uint32_t ms){
-    // Calculate the number of cycles per millisecond
-    uint32_t cycles = (32000000 / 1000) * ms;
 
-    // Use a volatile variable to prevent optimization
-    volatile uint32_t counter = 0;
-
-    // Wait for the specified number of cycles
-    while (counter < cycles) {
-        counter++;
-    }
+void send_data(void * ptr){
+  uint8_t str[20] = "I LOVE GHARAM\n";
+  UART_enuTransmitString(UART_1, UART_POLLING_ENABLE, str);
 }
 
 
-void toggleB0_1s(void* none){
-  // toggle pin 0 in port B every 20ms for 5 times
-  for(volatile uint8_t i = 0; i < 5; i++){
-    delay1s(1000);
-    GPIO_enuTogglePinValue(GPIO_PORTB, GPIO_PIN_0);
-  }
-}
-
-void toggleB1_1s(void* none){
-  // toggle pin 1 in port B every 20ms for 5 times
-  for(volatile uint8_t i = 0; i < 5; i++){
-    delay1s(1000);
-    GPIO_enuTogglePinValue(GPIO_PORTB, GPIO_PIN_2);
-  }
-}
-
-void commons_update(uint8_t en_com, uint8_t digit);
 int main(void)
 {
-	RCC_vidInit();
-	LCD_enuInit();
-	uint32_t sysClk, hclk, pclk1, pclk2;
-	RCC_enuGetSysClk(&sysClk);
-	RCC_enuGetHLCK(&hclk);
-	RCC_enuGetPLCK2(&pclk2);
-	RCC_enuGetPLCK1(&pclk1);
+  RCC_vidInit();
+  RCC_enuEnablePeripheralClock(APB_2_ID, AFIO_ID);
+//  GPIO_vidInit();
+  UART_enuInit(UART_1);
+  EXTI_enuInit();
+  LCD_enuInit();
+  void* ptr;
+  EXTI_enuSetInterruptHandler(EXTI_LINE1, &send_data, &ptr);
+  uint8_t str[100];
 	while(1){
+    UART_enuReceiveString(UART_1, UART_POLLING_ENABLE, str);
     LCD_enuSendCommand(CLEAR_DISPLAY_CMD);
-    LCD_enuSendCommand(SET_CURSOR_POSITION(0, 0));
-    LCD_enuDisplayString("SYSCLK");
-    LCD_enuSendCommand(SET_CURSOR_POSITION(1, 0));
-		LCD_enuDisplayInteger(sysClk);
-    SysTick_vidDelayMs(5000);
-    LCD_enuSendCommand(CLEAR_DISPLAY_CMD);
-    LCD_enuSendCommand(SET_CURSOR_POSITION(0, 0));
-    LCD_enuDisplayString("HCLK");
-    LCD_enuSendCommand(SET_CURSOR_POSITION(1, 0));
-    LCD_enuDisplayInteger(hclk);
-    SysTick_vidDelayMs(5000);
-    LCD_enuSendCommand(CLEAR_DISPLAY_CMD);
-    LCD_enuSendCommand(SET_CURSOR_POSITION(0, 0));
-    LCD_enuDisplayString("PCLK1");
-    LCD_enuSendCommand(SET_CURSOR_POSITION(1, 0));
-    LCD_enuDisplayInteger(pclk1);
-    SysTick_vidDelayMs(5000);
-    LCD_enuSendCommand(CLEAR_DISPLAY_CMD);
-    LCD_enuSendCommand(SET_CURSOR_POSITION(0, 0));
-    LCD_enuDisplayString("PCLK2");
-    LCD_enuSendCommand(SET_CURSOR_POSITION(1, 0));
-    LCD_enuDisplayInteger(pclk2);
-    SysTick_vidDelayMs(5000);
+    LCD_enuDisplayString(str);
+    SysTick_vidDelayMs(500);
 	}
 }
 
-void commons_update(uint8_t en_com, uint8_t digit){
-	SEVSEG_enuDisableCommon((en_com+1)%4);
-	SEVSEG_enuDisplayDigit(en_com, digit);
-	SEVSEG_enuEnableCommon(en_com);
-	SysTick_vidDelayMs(5);
-}

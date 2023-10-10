@@ -48,7 +48,10 @@ ErrorStates_t EXTI_enuInit(void){
             // set external interrupt peripheral configuration 
             // enable corresponding interrupt mask
             SET_BIT(EXTI_Regs->IMR, EXTI_ASTconfig[Iterator].EXTI_config.EXTI_id);
-            // set the trigger edge (rising, falling or both)            
+            // set the trigger edge (rising, falling or both)   
+            /*clear bits*/         
+            EXTI_Regs->RTSR &= ~(BIT_MASK << EXTI_ASTconfig[Iterator].EXTI_config.EXTI_id);
+            EXTI_Regs->FTSR &= ~(BIT_MASK << EXTI_ASTconfig[Iterator].EXTI_config.EXTI_id);
             EXTI_Regs->RTSR |= (GET_BIT(EXTI_ASTconfig[Iterator].edgeTrigger, 0) << EXTI_ASTconfig[Iterator].EXTI_config.EXTI_id);
             EXTI_Regs->FTSR |= (GET_BIT(EXTI_ASTconfig[Iterator].edgeTrigger, 1) << EXTI_ASTconfig[Iterator].EXTI_config.EXTI_id);
         }

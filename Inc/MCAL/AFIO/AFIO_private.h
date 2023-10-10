@@ -28,4 +28,8 @@ typedef struct ST_AFIO_Regs{
 // AFIO instants
 #define AFIO_Regs   ((volatile ST_AFIO_Regs_t*) AFIO_BASE)
 
+ #define _N_REMAP_  0UL 
+ #define _P_REMAP_  1UL
+ #define _F_REMAP_  3UL
+
 #endif

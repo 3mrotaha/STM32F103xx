@@ -97,7 +97,7 @@ typedef struct
 /*
  * AHB prescalers
  */
-#define _NOT_DIVIVED_ 7
+#define _NOT_DIVIVED_ 0
 #define SYSCLK_2 8
 #define SYSCLK_4 9
 #define SYSCLK_8 10

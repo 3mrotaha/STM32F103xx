@@ -19,7 +19,7 @@
  * @brief  use this to detect how many External interrupts are enabled initially
  * @ref ENABELED_INTERRUPTS 
  */
-#define ENABLED_EXIT_NUM    2
+#define ENABLED_EXIT_NUM    1
 
 /**
  * @brief this struct is used to configure the External interrupts

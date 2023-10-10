@@ -23,18 +23,6 @@
 #define CAN1_RX_MAPPING_STATE
 #define CAN1_TX_MAPPING_STATE
 
-/**
- *  @ref ADC_MAPPING_STATE 
- */
-#define ADC1_ETRGINJ_REMAP
-#define ADC1_ETRGREG_REMAP
 
-#define ADC2_ETRGINJ_REMAP
-#define ADC2_ETRGREG_REMAP
-
-/**
- * @ref TIMERS_REMAPPING_STATE 
- */
-// later
 
 #endif /* _AFIO_CONFIG_ */

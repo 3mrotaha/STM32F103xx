@@ -16,6 +16,14 @@
 #include "../../LIB/Error_States.h"
 
 /**
+ * @ref REMAPING_MODES
+ * @brief use this macros to select the remaping mode
+ */
+#define NO_REMAPING         _N_REMAP_
+#define PARTIAL_REMAPING    _P_REMAP_
+#define FULL_REMAPING       _F_REMAP_
+
+/**
  * @name AFIO_enuEXTILineMap
  * @brief this function is used to remap the external interrupt
  *        pins to the GPIO pins
@@ -30,5 +38,21 @@
  *           are out of range.
  */
 ErrorStates_t AFIO_enuEXTILineMap(uint8_t Copy_u8Line, uint8_t Copy_u8MappedRegister);
+
+/**
+ * @name AFIO_enuUartMap
+ * @brief this function is used to remap the UART pins
+ *        to the GPIO pins
+ * @param Copy_u8UartId (uint8_t)
+ * @param Copy_u8RemapValue (uint8_t) 
+ * @return - ES_OK (ErrorStates_t):
+ *           if the UART was mapped successfully
+ * @return - ES_NOK (ErrorStates_t):
+ *           if something went wrong
+ * @return - ES_OUT_OF_RANGE (ErrorStates_t)
+ *           if the UART id or the remap value
+ *           are out of range.
+ */
+ErrorStates_t AFIO_enuUartMap(uint8_t Copy_u8UartId, uint8_t Copy_u8RemapValue);
 
 #endif // _AFIO_INTERFACE_H_

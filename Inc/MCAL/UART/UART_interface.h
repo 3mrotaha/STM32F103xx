@@ -9,6 +9,39 @@
 #define MCAL_USART_USART_INTERFACE_H_
 #include "../../LIB/std_types.h"
 #include "../../LIB/Error_States.h"
+#include "UART_private.h"
+
+/**
+ * @brief Use this structure to configure the UART peripheral
+ * @param u8WordLength (uint8_t)
+ *          Word length of the UART peripheral
+ *          possible values are @ref UART_WORD_LENGTH
+ * @param u8StopBits (uint8_t)
+ *          Number of stop bits of the UART peripheral
+ *          possible values are @ref UART_STOP_BITS
+ * @param u8Parity (uint8_t)
+ *          Parity of the UART peripheral
+ *          possible values are @ref UART_PARITY
+ * @param u8FlowControl (uint8_t)
+ *          Flow control of the UART peripheral
+ *          possible values are @ref UART_FLOW_CONTROL
+ * @param u32BaudRate (uint32_t)
+ *          Baudrate of the UART peripheral
+ *          possible values are @ref UART_BAUDRATE
+ * @param pvCallBack (void (*)(void*))
+ *          Pointer to the callback function to be 
+ *          called when the UART interrupt occurs
+ */
+typedef struct ST_UART_Config{
+    uint8_t WordLength;
+    uint8_t StopBits;
+    uint8_t Parity;
+    uint8_t FlowControl;
+    uint32_t BaudRate;
+    uint8_t SendRecvEnable;
+    uint8_t IRQ_Enable;
+    void (*pvCallBack)(void*);
+}ST_UART_Config_t;
 
 /**
  * @ref UART_IDs
@@ -82,7 +115,36 @@
 #define UART_BAUDRATE_2_25M  _UART_B2_25M_
 #define UART_BAUDRATE_4_5M   _UART_B4_5M_
 
+/**
+ * @ref UART_INTERRUPT
+ * @brief use it to enable or disable the UART interrupt
+ */
+#define UART_INTERRUPT_DISABLE _UART_INT_DISABLE_
+#define UART_INTERRUPT_ENABLE  _UART_INT_ENABLE_
 
+/**
+ * @ref POLLING_ENABLE
+ * @brief use it to enable or disable polling for the UART peripheral
+ */
+#define UART_POLLING_ENABLE _UART_POLLING_ENABLE_
+#define UART_POLLING_DISABLE _UART_POLLING_DISABLE_
+
+/**
+ * @ref UART_SEND_RECEIVE_ENABLE
+ * @brief use it to enable or disable the send and receive of the UART peripheral
+ */
+#define UART_SEND_RECEIVE_ENABLE    _UART_SEND_RECEIVE_ENABLE_
+#define UART_SEND_RECEIVE_DISABLE   _UART_SEND_RECEIVE_DISABLE_
+#define UART_SEND_ENABLE            _UART_SEND_ENABLE_
+#define UART_RECEIVE_ENABLE         _UART_RECEIVE_ENABLE_
+
+/**
+ * @ref UART_REMAPPING
+ * @brief use it to select the remapping of the UART peripheral 
+ */
+#define UART_NO_MAPPING    _UART_NO_MAPPING_
+#define UART_PARTIAL_REMAP _UART_PARTIAL_REMAP_
+#define UART_FULL_REMAP    _UART_FULL_REMAP_
 
 /*****************************************************************************
  * @name UART_enuInit
@@ -101,6 +163,7 @@
  *******************************************************************************/
 ErrorStates_t UART_enuInit(uint8_t Copy_u8UartId);
 
+
 /*****************************************************************************
  * @name UART_enuDeInit
  * @param Copy_u8UartId (uint8_t)
@@ -118,12 +181,34 @@ ErrorStates_t UART_enuInit(uint8_t Copy_u8UartId);
  *****************************************************************************/
 ErrorStates_t UART_enuDeInit(uint8_t Copy_u8UartId);
 
+/*****************************************************************************
+ * @name UART_enuSetConfiguration
+ * @param Copy_u8UartId (uint8_t)
+ *       - ID of the UART peripheral to be configured
+ *       possible values are @ref UART_IDs
+ * @param Copy_pstUartConfig (ST_UART_Config_t*)
+ *       - Pointer to a structure of type @ref ST_UART_Config_t
+ *         containing the configuration parameters of the UART peripheral
+ * @return - ES_OK (ErrorStates_t):
+ *           if the UART peripheral is configured successfully
+ * @return - ES_OUT_OF_RANGE (ErrorStates_t):
+ *           if the UART peripheral ID is out of range
+ * @return - ES_NOK (ErrorStates_t):
+ *           if the UART peripheral is not configured successfully
+ * @brief - This function configures the UART peripheral
+ * @pre none
+ * @post none
+ *****************************************************************************/
+ErrorStates_t UART_enuSetConfiguration(uint8_t Copy_u8UartId, ST_UART_Config_t *Copy_pstUartConfig);
 
 /*****************************************************************************
  * @name UART_enuTransmitByte
  * @param Copy_u8UartId (uint8_t)
  *       - ID of the UART peripheral to transmit data through
  *       possible values are @ref UART_IDs
+ * @param Copy_u8PollingEn (PollingEn_t)
+ *      - Enable or disable polling for the UART peripheral
+ *        possible values are @ref POLLING_ENABLE
  * @param Copy_u8Data (uint8_t)
  *       - Byte of data to be transmitted through the UART peripheral
  * @return - ES_OK (ErrorStates_t):
@@ -136,7 +221,7 @@ ErrorStates_t UART_enuDeInit(uint8_t Copy_u8UartId);
  * @pre none
  * @post none
  *****************************************************************************/
-ErrorStates_t UART_enuTransmitByte(uint8_t Copy_u8UartId, uint8_t Copy_u8Data);
+ErrorStates_t UART_enuTransmitByte(uint8_t Copy_u8UartId, PollingEn_t Copy_u8PollingEn, uint8_t Copy_u8Data);
 
 
 /*****************************************************************************
@@ -144,6 +229,9 @@ ErrorStates_t UART_enuTransmitByte(uint8_t Copy_u8UartId, uint8_t Copy_u8Data);
  * @param Copy_u8UartId (uint8_t)
  *       - ID of the UART peripheral to receive data through
  *       possible values are @ref UART_IDs
+ * @param Copy_u8PollingEn (PollingEn_t)
+ *        - Enable or disable polling for the UART peripheral
+ *          possible values are @ref POLLING_ENABLE
  * @param Copy_pu8Data (uint8_t*)
  *       - Pointer to a variable to store the received byte of data
  * @return - ES_OK (ErrorStates_t):
@@ -156,7 +244,7 @@ ErrorStates_t UART_enuTransmitByte(uint8_t Copy_u8UartId, uint8_t Copy_u8Data);
  * @pre none
  * @post none
  *****************************************************************************/
-ErrorStates_t UART_enuReceiveByte(uint8_t Copy_u8UartId, uint8_t *Copy_pu8Data);
+ErrorStates_t UART_enuReceiveByte(uint8_t Copy_u8UartId, PollingEn_t Copy_u8PollingEn, uint8_t *Copy_pu8Data);
 
 
 /*****************************************************************************
@@ -164,6 +252,9 @@ ErrorStates_t UART_enuReceiveByte(uint8_t Copy_u8UartId, uint8_t *Copy_pu8Data);
  * @param Copy_u8UartId (uint8_t)
  *       - ID of the UART peripheral to transmit data through
  *       possible values are @ref UART_IDs
+ * @param Copy_u8PollingEn (PollingEn_t)
+ *        - Enable or disable polling for the UART peripheral
+ *           possible values are @ref POLLING_ENABLE
  * @param Copy_pu8Data (uint8_t*)
  *       - Pointer to the string of data to be transmitted through the UART peripheral
  * @return - ES_OK (ErrorStates_t):
@@ -176,7 +267,7 @@ ErrorStates_t UART_enuReceiveByte(uint8_t Copy_u8UartId, uint8_t *Copy_pu8Data);
  * @pre none
  * @post none
  *****************************************************************************/
-ErrorStates_t UART_enuTransmitString(uint8_t Copy_u8UartId, uint8_t *Copy_pu8Data);
+ErrorStates_t UART_enuTransmitString(uint8_t Copy_u8UartId, PollingEn_t Copy_u8PollingEn, uint8_t *Copy_pu8Data);
 
 
 /*****************************************************************************
@@ -184,6 +275,9 @@ ErrorStates_t UART_enuTransmitString(uint8_t Copy_u8UartId, uint8_t *Copy_pu8Dat
  * @param Copy_u8UartId (uint8_t)
  *       - ID of the UART peripheral to receive data through
  *       possible values are @ref UART_IDs
+ * @param Copy_u8PollingEn (PollingEn_t)
+ *       - Enable or disable polling for the UART peripheral
+ *        possible values are @ref POLLING_ENABLE
  * @param Copy_pu8Data (uint8_t*)
  *       - Pointer to a buffer to store the received string of data
  * @return - ES_OK (ErrorStates_t):
@@ -196,7 +290,7 @@ ErrorStates_t UART_enuTransmitString(uint8_t Copy_u8UartId, uint8_t *Copy_pu8Dat
  * @pre none
  * @post none
  *****************************************************************************/
-ErrorStates_t UART_enuReceiveString(uint8_t Copy_u8UartId, uint8_t *Copy_pu8Data);
+ErrorStates_t UART_enuReceiveString(uint8_t Copy_u8UartId, PollingEn_t Copy_u8PollingEn, uint8_t *Copy_pu8Data);
 
 /*****************************************************************************
  * @name UART_enuEnableInterrupt
