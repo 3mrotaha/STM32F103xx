@@ -300,9 +300,9 @@ ErrorStates_t UART_enuReceiveString(uint8_t Copy_u8UartId, PollingEn_t Copy_u8Po
             // receive byte
             localerr = UART_enuReceiveByte(Copy_u8UartId, Copy_u8PollingEn, &Copy_pu8Data[dataLen]);
             dataLen++; // increment index            
-        }while(Copy_pu8Data[dataLen] != '\r' && Copy_pu8Data[dataLen] != '\n');
+        }while(Copy_pu8Data[dataLen - 1] != '\r' && Copy_pu8Data[dataLen - 1] != '\n');
 
-        Copy_pu8Data[dataLen] = '\0'; // add null terminator
+        Copy_pu8Data[dataLen - 1] = '\0'; // add null terminator
         
         return localerr;
     }else{

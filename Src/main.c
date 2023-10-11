@@ -62,10 +62,9 @@ int main(void)
   EXTI_enuSetInterruptHandler(EXTI_LINE1, &send_data, &ptr);
   uint8_t str[100];
 	while(1){
-    UART_enuReceiveString(UART_1, UART_POLLING_ENABLE, str);
-    LCD_enuSendCommand(CLEAR_DISPLAY_CMD);
-    LCD_enuDisplayString(str);
-    SysTick_vidDelayMs(500);
+		UART_enuReceiveString(UART_1, UART_POLLING_ENABLE, str);
+		LCD_enuSendCommand(CLEAR_DISPLAY_CMD);
+		LCD_enuDisplayString(str);
+		SysTick_vidDelayMs(500);
 	}
 }
-
